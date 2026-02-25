@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { layoutBlocks } from '../../../shared/blocks'
 import { publishFields, seoFields, slugField } from '../../../shared/fields'
 import { adminOrEditor, publicRead } from '../../../shared/access'
+import { ensurePublishedAt, generateSlugHook } from '../../../shared/hooks'
 
 /**
  * Products (MVP).
@@ -22,6 +23,10 @@ export const Products: CollectionConfig = {
     create: adminOrEditor,
     update: adminOrEditor,
     delete: adminOrEditor,
+  },
+  hooks: {
+    beforeValidate: [generateSlugHook()],
+    beforeChange: [ensurePublishedAt()],
   },
   fields: [
     {
@@ -48,42 +53,74 @@ export const Products: CollectionConfig = {
       },
     },
     {
-      name: 'featuredImage',
-      label: 'Featured Image',
-      type: 'relationship',
-      relationTo: 'media',
+      type: 'collapsible',
+      label: 'Media',
       admin: {
-        description: 'Optional. Primary image used for listings and social previews.',
+        initCollapsed: false,
+        description: 'Product images used for listings and detail pages.',
       },
+      fields: [
+        {
+          name: 'featuredImage',
+          label: 'Featured Image',
+          type: 'relationship',
+          relationTo: 'media',
+          admin: {
+            description: 'Optional. Primary image used for listings and social previews.',
+          },
+        },
+        {
+          name: 'gallery',
+          label: 'Gallery',
+          type: 'relationship',
+          relationTo: 'media',
+          hasMany: true,
+          admin: {
+            description: 'Optional additional product images.',
+          },
+        },
+      ],
     },
     {
-      name: 'gallery',
-      label: 'Gallery',
-      type: 'relationship',
-      relationTo: 'media',
-      hasMany: true,
+      type: 'collapsible',
+      label: 'Pricing',
       admin: {
-        description: 'Optional additional product images.',
+        initCollapsed: false,
+        description: 'MVP pricing fields (currency handling is integration-specific).',
       },
-    },
-    {
-      name: 'basePrice',
-      label: 'Base Price',
-      type: 'number',
-      required: true,
-      min: 0,
-      admin: {
-        description: 'Base price (currency handling is frontend/integration-specific in this starter).',
-      },
-    },
-    {
-      name: 'salePrice',
-      label: 'Sale Price',
-      type: 'number',
-      min: 0,
-      admin: {
-        description: 'Optional sale/discount price. Frontends can compute savings/strikethrough.',
-      },
+      fields: [
+        {
+          name: 'basePrice',
+          label: 'Base Price',
+          type: 'number',
+          required: true,
+          min: 0,
+          admin: {
+            placeholder: '0',
+          },
+        },
+        {
+          name: 'salePrice',
+          label: 'Sale Price',
+          type: 'number',
+          min: 0,
+          validate: (
+            value: number | null | undefined,
+            { data }: { data?: { basePrice?: unknown } },
+          ) => {
+            if (value === null || typeof value === 'undefined') return true
+            const base = data?.basePrice
+            if (typeof base === 'number' && value > base) {
+              return 'Sale price must be less than or equal to base price.'
+            }
+            return true
+          },
+          admin: {
+            description: 'Optional. Must be less than or equal to Base Price.',
+            placeholder: '0',
+          },
+        },
+      ],
     },
     {
       name: 'productCategories',
@@ -118,45 +155,52 @@ export const Products: CollectionConfig = {
       ],
     },
     {
-      name: 'variants',
+      type: 'collapsible',
       label: 'Variants',
-      type: 'array',
       admin: {
+        initCollapsed: true,
         description:
           'MVP variants. Keep lightweight; advanced option matrices can be added later if needed.',
       },
       fields: [
         {
-          name: 'sku',
-          label: 'SKU',
-          type: 'text',
-          admin: {
-            description: 'Optional variant SKU.',
-          },
-        },
-        {
-          name: 'price',
-          label: 'Price',
-          type: 'number',
-          required: true,
-          min: 0,
-        },
-        {
-          name: 'stock',
-          label: 'Stock',
-          type: 'number',
-          min: 0,
-          admin: {
-            description: 'Optional stock count. TODO: replace with inventory module later.',
-          },
-        },
-        {
-          name: 'attributesSummary',
-          label: 'Attributes Summary',
-          type: 'text',
-          admin: {
-            description: 'Optional. Example: "Size: M / Color: Black".',
-          },
+          name: 'variants',
+          label: 'Variants',
+          type: 'array',
+          fields: [
+            {
+              name: 'sku',
+              label: 'SKU',
+              type: 'text',
+              admin: {
+                description: 'Optional variant SKU.',
+              },
+            },
+            {
+              name: 'price',
+              label: 'Price',
+              type: 'number',
+              required: true,
+              min: 0,
+            },
+            {
+              name: 'stock',
+              label: 'Stock',
+              type: 'number',
+              min: 0,
+              admin: {
+                description: 'Optional stock count. TODO: replace with inventory module later.',
+              },
+            },
+            {
+              name: 'attributesSummary',
+              label: 'Attributes Summary',
+              type: 'text',
+              admin: {
+                description: 'Optional. Example: "Size: M / Color: Black".',
+              },
+            },
+          ],
         },
       ],
     },

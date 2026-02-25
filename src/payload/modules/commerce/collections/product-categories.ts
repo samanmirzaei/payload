@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { slugField } from '../../../shared/fields'
 import { adminOrEditor, publicRead } from '../../../shared/access'
+import { generateSlugHook } from '../../../shared/hooks'
 
 /**
  * Product categories (generic taxonomy).
@@ -18,6 +19,9 @@ export const ProductCategories: CollectionConfig = {
     create: adminOrEditor,
     update: adminOrEditor,
     delete: adminOrEditor,
+  },
+  hooks: {
+    beforeValidate: [generateSlugHook()],
   },
   fields: [
     {

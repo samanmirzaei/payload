@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { publishFields, seoFields, slugField } from '../../../shared/fields'
 import { layoutBlocks } from '../../../shared/blocks'
 import { adminOrEditor, publicRead } from '../../../shared/access'
+import { ensurePublishedAt, generateSlugHook } from '../../../shared/hooks'
 
 /**
  * Generic pages collection.
@@ -20,6 +21,10 @@ export const Pages: CollectionConfig = {
     create: adminOrEditor,
     update: adminOrEditor,
     delete: adminOrEditor,
+  },
+  hooks: {
+    beforeValidate: [generateSlugHook()],
+    beforeChange: [ensurePublishedAt()],
   },
   fields: [
     {

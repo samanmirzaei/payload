@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { slugField } from '../../../shared/fields'
 import { adminOrEditor, publicRead } from '../../../shared/access'
+import { generateSlugHook } from '../../../shared/hooks'
 
 /**
  * Generic categories (reusable for blog posts now, and later potentially products/taxonomy).
@@ -17,6 +18,9 @@ export const Categories: CollectionConfig = {
     create: adminOrEditor,
     update: adminOrEditor,
     delete: adminOrEditor,
+  },
+  hooks: {
+    beforeValidate: [generateSlugHook()],
   },
   fields: [
     {

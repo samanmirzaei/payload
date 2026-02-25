@@ -60,6 +60,7 @@ export const publishFields = (options: PublishFieldsOptions = {}): Field[] => {
       type: 'date',
       admin: {
         ...admin,
+        condition: (_data, siblingData) => siblingData?.[statusName] === 'published',
         description:
           'Optional. Frontends can prefer this for sorting/feeds when set (otherwise fallback to createdAt).',
       },
@@ -68,4 +69,3 @@ export const publishFields = (options: PublishFieldsOptions = {}): Field[] => {
 
   return fields
 }
-

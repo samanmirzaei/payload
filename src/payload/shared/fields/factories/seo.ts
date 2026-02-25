@@ -6,6 +6,11 @@ export type SeoFieldOptions = {
    */
   name?: string
   label?: string
+  /**
+   * If true, places the SEO group in the admin sidebar.
+   * Defaults to true for editor usability.
+   */
+  sidebar?: boolean
 }
 
 /**
@@ -14,11 +19,13 @@ export type SeoFieldOptions = {
  */
 export const seoFields = (options: SeoFieldOptions = {}): Field => {
   const groupName = options.name ?? 'seo'
+  const sidebar = options.sidebar ?? true
 
   return {
     name: groupName,
     label: options.label ?? 'SEO',
     type: 'group',
+    admin: sidebar ? { position: 'sidebar' } : undefined,
     fields: [
       {
         name: 'metaTitle',
