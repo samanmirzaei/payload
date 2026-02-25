@@ -111,7 +111,7 @@ export const Products: CollectionConfig = {
             if (value === null || typeof value === 'undefined') return true
             const base = data?.basePrice
             if (typeof base === 'number' && value > base) {
-              return 'Sale price must be less than or equal to base price.'
+              return 'salePrice must be less than or equal to basePrice'
             }
             return true
           },
