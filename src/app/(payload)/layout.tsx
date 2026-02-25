@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import type { ServerFunctionClient } from 'payload'
 
+import '@payloadcms/next/css'
+
 import { importMap } from './admin/importMap.js'
 import { RootLayout, handleServerFunctions } from '@payloadcms/next/layouts'
 import config from '@payload-config'
@@ -21,6 +23,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
   return (
     <RootLayout
       config={config as any}
+      htmlProps={{ suppressHydrationWarning: true }}
       importMap={importMap}
       serverFunction={serverFunction}
     >
