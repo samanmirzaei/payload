@@ -3,6 +3,8 @@ import path from 'node:path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { en } from '@payloadcms/translations/languages/en'
+import { fa } from '@payloadcms/translations/languages/fa'
 
 import { createModuleRegistry } from './modules/registry'
 import { coreModules } from './modules/core'
@@ -52,6 +54,19 @@ export default buildConfig({
 
   admin: {
     user: 'users',
+    components: {
+      // Custom admin header actions (language + theme toggles).
+      // NOTE: After adding/changing custom components, regenerate the import map:
+      // `npx payload generate:importmap`
+      actions: ['./src/payload/admin/components/AdminActions'],
+    },
+  },
+
+  i18n: {
+    // Enables the built-in admin language switcher and proper RTL layout for Persian.
+    // Persian is default for this starter; switchable to English from the admin UI.
+    fallbackLanguage: 'fa',
+    supportedLanguages: { en, fa },
   },
 
   db: postgresAdapter({

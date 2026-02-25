@@ -6,6 +6,7 @@ export const Footer: GlobalConfig = {
   slug: 'footer',
   label: 'پابرگ',
   admin: {
+    group: 'تنظیمات',
     description: 'محتوای پابرگ سایت (ناوبری، یادداشت‌ها، موارد حقوقی) که در فرانت‌اندها استفاده می‌شود.',
   },
   access: {
@@ -62,4 +63,3 @@ export const Footer: GlobalConfig = {
     },
   ],
 }
-

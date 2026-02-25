@@ -17,6 +17,7 @@ export const Posts: CollectionConfig = {
     plural: 'نوشته‌ها',
   },
   admin: {
+    group: 'محتوا',
     useAsTitle: 'title',
     description: 'نوشته‌های قابل استفادهٔ مجدد برای وبلاگ، خبر و محتوای تحریریه.',
   },

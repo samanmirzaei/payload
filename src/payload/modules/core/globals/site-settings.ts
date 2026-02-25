@@ -10,6 +10,7 @@ export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
   label: 'تنظیمات سایت',
   admin: {
+    group: 'تنظیمات',
     description: 'اطلاعات کلی هویت سایت و راه‌های ارتباطی که در فرانت‌اندها استفاده می‌شود.',
   },
   access: {

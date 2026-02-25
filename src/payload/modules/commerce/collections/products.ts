@@ -19,6 +19,7 @@ export const Products: CollectionConfig = {
     plural: 'محصولات',
   },
   admin: {
+    group: 'فروشگاه',
     useAsTitle: 'title',
     description: 'محصولات عمومی برای پروژه‌های فروشگاهی.',
   },

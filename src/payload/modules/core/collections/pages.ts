@@ -17,6 +17,7 @@ export const Pages: CollectionConfig = {
     plural: 'صفحه‌ها',
   },
   admin: {
+    group: 'محتوا',
     useAsTitle: 'title',
     description: 'صفحه‌های قابل استفادهٔ مجدد برای وب‌سایت‌های شرکتی، مارکتینگ و محتوا.',
   },

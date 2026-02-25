@@ -14,6 +14,7 @@ export const Users: CollectionConfig = {
   },
   auth: true,
   admin: {
+    group: 'کاربران',
     useAsTitle: 'email',
     description: 'کاربران پنل مدیریت و نقش‌های دسترسی.',
   },

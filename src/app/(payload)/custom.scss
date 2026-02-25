@@ -1,2 +1,47 @@
 /* Optional: add custom admin styling here */
 
+/* Admin header actions: language + theme toggles */
+.admin-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+}
+
+.admin-actions__lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-actions__sep {
+  opacity: 0.5;
+  user-select: none;
+}
+
+.admin-actions__btn {
+  appearance: none;
+  border: 1px solid var(--theme-elevation-200);
+  background: var(--theme-elevation-0);
+  color: var(--theme-text);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.admin-actions__btn:hover {
+  background: var(--theme-elevation-50);
+}
+
+.admin-actions__btn.is-active {
+  border-color: var(--theme-elevation-400);
+  background: var(--theme-elevation-100);
+  font-weight: 600;
+}
+
+/* Extra safety: make sure the admin respects direction in RTL mode */
+html[dir='rtl'] body {
+  direction: rtl;
+}

@@ -14,6 +14,7 @@ export const Categories: CollectionConfig = {
     plural: 'دسته‌بندی‌ها',
   },
   admin: {
+    group: 'محتوا',
     useAsTitle: 'title',
     description: 'طبقه‌بندی عمومی و قابل استفادهٔ مجدد.',
   },

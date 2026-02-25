@@ -17,6 +17,7 @@ export const Media: CollectionConfig = {
     plural: 'رسانه‌ها',
   },
   admin: {
+    group: 'رسانه‌ها',
     useAsTitle: 'alt',
     description: 'فایل‌ها و تصاویر بارگذاری‌شده که در بخش‌های مختلف محتوا استفاده می‌شوند.',
   },

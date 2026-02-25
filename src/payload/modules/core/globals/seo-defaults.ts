@@ -11,6 +11,7 @@ export const SeoDefaults: GlobalConfig = {
   slug: 'seo-defaults',
   label: 'پیش‌فرض‌های سئو',
   admin: {
+    group: 'تنظیمات',
     description: 'مقادیر پیش‌فرض سئو که وقتی سئوی صفحه خالی است، توسط فرانت‌اندها اعمال می‌شود.',
   },
   access: {
@@ -129,4 +130,3 @@ export const SeoDefaults: GlobalConfig = {
     },
   ],
 }
-

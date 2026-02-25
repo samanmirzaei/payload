@@ -15,6 +15,7 @@ export const ProductCategories: CollectionConfig = {
     plural: 'دسته‌بندی‌های محصول',
   },
   admin: {
+    group: 'فروشگاه',
     useAsTitle: 'title',
     description: 'دسته‌بندی‌های محصولات.',
   },

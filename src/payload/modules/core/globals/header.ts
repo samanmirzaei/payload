@@ -6,6 +6,7 @@ export const Header: GlobalConfig = {
   slug: 'header',
   label: 'سربرگ',
   admin: {
+    group: 'تنظیمات',
     description: 'محتوای سربرگ سایت (ناوبری، اعلان‌ها) که در فرانت‌اندها استفاده می‌شود.',
   },
   access: {
