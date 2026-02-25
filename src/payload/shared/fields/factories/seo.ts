@@ -23,64 +23,71 @@ export const seoFields = (options: SeoFieldOptions = {}): Field => {
 
   return {
     name: groupName,
-    label: options.label ?? 'SEO',
+    label: options.label ?? 'سئو',
     type: 'group',
     admin: sidebar ? { position: 'sidebar' } : undefined,
     fields: [
       {
         name: 'metaTitle',
+        label: 'عنوان متا',
         type: 'text',
         admin: {
-          description: 'Suggested: <= 60 characters. Used for the document title and search results.',
+          description: 'پیشنهاد: حداکثر ۶۰ کاراکتر. برای عنوان صفحه و نتایج جستجو استفاده می‌شود.',
         },
       },
       {
         name: 'metaDescription',
+        label: 'توضیحات متا',
         type: 'textarea',
         admin: {
-          description: 'Suggested: <= 160 characters. Used for search snippets.',
+          description: 'پیشنهاد: حداکثر ۱۶۰ کاراکتر. برای خلاصهٔ نتایج جستجو استفاده می‌شود.',
         },
       },
       {
         name: 'canonicalUrl',
+        label: 'نشانی Canonical',
         type: 'text',
         admin: {
-          description: 'Absolute URL preferred when set (e.g. https://example.com/path).',
+          description: 'در صورت تنظیم، ترجیحاً URL کامل وارد شود (مثلاً https://example.com/path).',
         },
       },
       {
         name: 'noIndex',
+        label: 'عدم ایندکس (noindex)',
         type: 'checkbox',
         defaultValue: false,
         admin: {
-          description: 'If enabled, frontends should render: <meta name="robots" content="noindex" />',
+          description: 'اگر فعال باشد، فرانت‌اند باید meta robots با مقدار noindex رندر کند.',
         },
       },
       {
         name: 'noFollow',
+        label: 'عدم دنبال‌کردن (nofollow)',
         type: 'checkbox',
         defaultValue: false,
         admin: {
-          description: 'If enabled, frontends should render: <meta name="robots" content="nofollow" />',
+          description: 'اگر فعال باشد، فرانت‌اند باید meta robots با مقدار nofollow رندر کند.',
         },
       },
       {
         name: 'openGraph',
-        label: 'Open Graph',
+        label: 'اوپن‌گراف (Open Graph)',
         type: 'group',
         fields: [
           {
             name: 'title',
+            label: 'عنوان',
             type: 'text',
             admin: {
-              description: 'If blank, frontends can fallback to metaTitle.',
+              description: 'اگر خالی باشد، فرانت‌اند می‌تواند از عنوان متا استفاده کند.',
             },
           },
           {
             name: 'description',
+            label: 'توضیحات',
             type: 'textarea',
             admin: {
-              description: 'If blank, frontends can fallback to metaDescription.',
+              description: 'اگر خالی باشد، فرانت‌اند می‌تواند از توضیحات متا استفاده کند.',
             },
           },
           /**
@@ -89,48 +96,56 @@ export const seoFields = (options: SeoFieldOptions = {}): Field => {
            */
           {
             name: 'imageUrl',
+            label: 'نشانی تصویر',
             type: 'text',
             admin: {
               description:
-                'Temporary: URL string. TODO: replace with media relationship once a Media module exists.',
+                'موقت: رشتهٔ URL. (TODO: بعداً به رابطه با Media تبدیل شود.)',
             },
           },
         ],
       },
       {
         name: 'twitter',
-        label: 'Twitter',
+        label: 'توییتر (X)',
         type: 'group',
         fields: [
           {
             name: 'title',
+            label: 'عنوان',
             type: 'text',
             admin: {
-              description: 'If blank, frontends can fallback to metaTitle.',
+              description: 'اگر خالی باشد، فرانت‌اند می‌تواند از عنوان متا استفاده کند.',
             },
           },
           {
             name: 'description',
+            label: 'توضیحات',
             type: 'textarea',
             admin: {
-              description: 'If blank, frontends can fallback to metaDescription.',
+              description: 'اگر خالی باشد، فرانت‌اند می‌تواند از توضیحات متا استفاده کند.',
             },
           },
           {
             name: 'card',
+            label: 'نوع کارت',
             type: 'select',
             defaultValue: 'summary_large_image',
-            options: ['summary', 'summary_large_image'],
+            options: [
+              { label: 'خلاصه', value: 'summary' },
+              { label: 'خلاصه با تصویر بزرگ', value: 'summary_large_image' },
+            ],
           },
           /**
            * TODO (later): switch to a relationship to a shared `media` upload collection.
            */
           {
             name: 'imageUrl',
+            label: 'نشانی تصویر',
             type: 'text',
             admin: {
               description:
-                'Temporary: URL string. TODO: replace with media relationship once a Media module exists.',
+                'موقت: رشتهٔ URL. (TODO: بعداً به رابطه با Media تبدیل شود.)',
             },
           },
         ],

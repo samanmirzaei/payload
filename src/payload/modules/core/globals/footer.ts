@@ -4,9 +4,9 @@ import { adminOrEditor, publicRead } from '../../../shared/access'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
-  label: 'Footer',
+  label: 'پابرگ',
   admin: {
-    description: 'Site-wide footer content (navigation, notes, legal).',
+    description: 'محتوای پابرگ سایت (ناوبری، یادداشت‌ها، موارد حقوقی) که در فرانت‌اندها استفاده می‌شود.',
   },
   access: {
     read: publicRead,
@@ -15,38 +15,38 @@ export const Footer: GlobalConfig = {
   fields: [
     {
       name: 'copyrightText',
-      label: 'Copyright Text',
+      label: 'متن کپی‌رایت',
       type: 'text',
       admin: {
-        description: 'Optional. Example: © 2026 Company Name. All rights reserved.',
+        description: 'اختیاری. مثال: © 2026 نام شرکت. همه حقوق محفوظ است.',
       },
     },
     {
       name: 'footerNavigationItems',
-      label: 'Footer Navigation Items',
+      label: 'آیتم‌های ناوبری پابرگ',
       type: 'array',
       admin: {
-        description: 'Secondary/footer navigation used by frontends.',
+        description: 'ناوبری ثانویه/پابرگ که در فرانت‌اند استفاده می‌شود.',
       },
       fields: [
         {
           name: 'label',
-          label: 'Label',
+          label: 'عنوان',
           type: 'text',
           required: true,
         },
         {
           name: 'href',
-          label: 'Href',
+          label: 'لینک (Href)',
           type: 'text',
           required: true,
           admin: {
-            description: 'Relative (e.g. /privacy) or absolute URL.',
+            description: 'می‌تواند نسبی باشد (مثل /privacy) یا URL کامل.',
           },
         },
         {
           name: 'openInNewTab',
-          label: 'Open In New Tab',
+          label: 'باز شدن در تب جدید',
           type: 'checkbox',
           defaultValue: false,
         },
@@ -54,11 +54,12 @@ export const Footer: GlobalConfig = {
     },
     {
       name: 'footerNote',
-      label: 'Footer Note',
+      label: 'یادداشت پابرگ',
       type: 'textarea',
       admin: {
-        description: 'Optional longer note (e.g. disclaimers, address, hours).',
+        description: 'اختیاری. یادداشت طولانی‌تر (مثل توضیحات حقوقی، آدرس، ساعت کاری).',
       },
     },
   ],
 }
+

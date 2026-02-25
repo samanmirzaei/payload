@@ -8,9 +8,14 @@ import { adminOnly, adminOrSelf, allowFirstUserOr } from '../../../shared/access
  */
 export const Users: CollectionConfig = {
   slug: 'users',
+  labels: {
+    singular: 'کاربر',
+    plural: 'کاربران',
+  },
   auth: true,
   admin: {
     useAsTitle: 'email',
+    description: 'کاربران پنل مدیریت و نقش‌های دسترسی.',
   },
   access: {
     read: adminOrSelf,
@@ -21,22 +26,23 @@ export const Users: CollectionConfig = {
   fields: [
     {
       name: 'name',
+      label: 'نام',
       type: 'text',
     },
     {
       name: 'role',
-      label: 'Role',
+      label: 'نقش',
       type: 'select',
       required: true,
       defaultValue: 'admin',
       saveToJWT: true,
       options: [
-        { label: 'Admin', value: 'admin' },
-        { label: 'Editor', value: 'editor' },
+        { label: 'مدیر', value: 'admin' },
+        { label: 'ویرایشگر', value: 'editor' },
       ],
       admin: {
         description:
-          'MVP roles. TODO: extend roles and add fine-grained policies per project (clients, teams, etc.).',
+          'نقش‌ها (MVP). TODO: در هر پروژه نقش‌های بیشتر و سیاست‌های دقیق‌تر اضافه شود.',
       },
     },
   ],

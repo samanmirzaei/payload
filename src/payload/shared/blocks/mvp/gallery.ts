@@ -3,26 +3,26 @@ import type { Block } from 'payload'
 export const GalleryBlock: Block = {
   slug: 'gallery',
   labels: {
-    singular: 'Gallery',
-    plural: 'Galleries',
+    singular: 'گالری',
+    plural: 'گالری‌ها',
   },
   fields: [
     {
       name: 'title',
-      label: 'Title',
+      label: 'عنوان',
       type: 'text',
       admin: {
-        description: 'Optional heading for this gallery section.',
+        description: 'عنوان اختیاری برای این بخش گالری.',
       },
     },
     {
       name: 'images',
-      label: 'Images',
+      label: 'تصاویر',
       type: 'relationship',
       relationTo: 'media',
       hasMany: true,
       admin: {
-        description: 'Select one or more images from Media.',
+        description: 'یک یا چند تصویر را از «رسانه‌ها» انتخاب کنید.',
       },
     },
   ],

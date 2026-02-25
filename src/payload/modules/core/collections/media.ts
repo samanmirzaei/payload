@@ -13,12 +13,12 @@ import { adminOrEditor, publicRead } from '../../../shared/access'
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: {
-    singular: 'Media',
-    plural: 'Media',
+    singular: 'رسانه',
+    plural: 'رسانه‌ها',
   },
   admin: {
     useAsTitle: 'alt',
-    description: 'Uploaded assets used across content (images, files).',
+    description: 'فایل‌ها و تصاویر بارگذاری‌شده که در بخش‌های مختلف محتوا استفاده می‌شوند.',
   },
   access: {
     read: publicRead,
@@ -32,35 +32,35 @@ export const Media: CollectionConfig = {
   fields: [
     {
       name: 'alt',
-      label: 'Alt Text',
+      label: 'متن جایگزین (Alt)',
       type: 'text',
       required: true,
       admin: {
-        description: 'Required for accessibility and SEO. Describe the image content.',
+        description: 'برای دسترس‌پذیری و سئو ضروری است. محتوای تصویر را توصیف کنید.',
       },
     },
     {
       name: 'caption',
-      label: 'Caption',
+      label: 'زیرنویس',
       type: 'textarea',
       admin: {
-        description: 'Optional. Displayed near the image in some layouts.',
+        description: 'اختیاری. در برخی چیدمان‌ها کنار تصویر نمایش داده می‌شود.',
       },
     },
     {
       name: 'source',
-      label: 'Source',
+      label: 'منبع',
       type: 'text',
       admin: {
-        description: 'Optional. Where this asset came from (publication, website, etc.).',
+        description: 'اختیاری. منبع تهیهٔ این فایل (وب‌سایت، نشریه و ...).',
       },
     },
     {
       name: 'credit',
-      label: 'Credit',
+      label: 'اعتبار/کِرِدیت',
       type: 'text',
       admin: {
-        description: 'Optional. Photographer/creator credit for editorial/legal requirements.',
+        description: 'اختیاری. نام عکاس/سازنده برای نیازهای حقوقی یا تحریریه.',
       },
     },
   ],

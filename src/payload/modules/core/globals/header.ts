@@ -4,9 +4,9 @@ import { adminOrEditor, publicRead } from '../../../shared/access'
 
 export const Header: GlobalConfig = {
   slug: 'header',
-  label: 'Header',
+  label: 'سربرگ',
   admin: {
-    description: 'Site-wide header content (navigation, announcements).',
+    description: 'محتوای سربرگ سایت (ناوبری، اعلان‌ها) که در فرانت‌اندها استفاده می‌شود.',
   },
   access: {
     read: publicRead,
@@ -15,38 +15,38 @@ export const Header: GlobalConfig = {
   fields: [
     {
       name: 'announcementText',
-      label: 'Announcement Text',
+      label: 'متن اعلان',
       type: 'text',
       admin: {
-        description: 'Optional short announcement (frontends decide how/when to display).',
+        description: 'اختیاری. متن کوتاه اعلان (نمایش/زمان‌بندی در اختیار فرانت‌اند است).',
       },
     },
     {
       name: 'navigationItems',
-      label: 'Navigation Items',
+      label: 'آیتم‌های ناوبری',
       type: 'array',
       admin: {
-        description: 'Primary navigation used by frontends.',
+        description: 'ناوبری اصلی که در فرانت‌اند استفاده می‌شود.',
       },
       fields: [
         {
           name: 'label',
-          label: 'Label',
+          label: 'عنوان',
           type: 'text',
           required: true,
         },
         {
           name: 'href',
-          label: 'Href',
+          label: 'لینک (Href)',
           type: 'text',
           required: true,
           admin: {
-            description: 'Relative (e.g. /about) or absolute URL.',
+            description: 'می‌تواند نسبی باشد (مثل /about) یا URL کامل.',
           },
         },
         {
           name: 'openInNewTab',
-          label: 'Open In New Tab',
+          label: 'باز شدن در تب جدید',
           type: 'checkbox',
           defaultValue: false,
         },

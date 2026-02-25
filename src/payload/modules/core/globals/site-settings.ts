@@ -8,9 +8,9 @@ import { adminOrEditor, publicRead } from '../../../shared/access'
  */
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
-  label: 'Site Settings',
+  label: 'تنظیمات سایت',
   admin: {
-    description: 'General site identity and contact details used across frontends.',
+    description: 'اطلاعات کلی هویت سایت و راه‌های ارتباطی که در فرانت‌اندها استفاده می‌شود.',
   },
   access: {
     read: publicRead,
@@ -19,70 +19,71 @@ export const SiteSettings: GlobalConfig = {
   fields: [
     {
       name: 'siteName',
-      label: 'Site Name',
+      label: 'نام سایت',
       type: 'text',
       required: true,
       admin: {
-        description: 'Displayed in various places (e.g. header, footer, metadata defaults).',
+        description: 'در بخش‌های مختلف نمایش داده می‌شود (مثل سربرگ، پابرگ و پیش‌فرض‌های متادیتا).',
       },
     },
     {
       name: 'siteUrl',
-      label: 'Site URL',
+      label: 'نشانی سایت (URL)',
       type: 'text',
       admin: {
         description:
-          'Canonical base URL (e.g. https://example.com). TODO: add URL validation in a later step.',
+          'نشانی پایه/کانونیکال (مثلاً https://example.com). TODO: اعتبارسنجی URL در مرحله‌ای بعد اضافه شود.',
       },
     },
     {
       name: 'defaultLanguage',
-      label: 'Default Language',
+      label: 'زبان پیش‌فرض',
       type: 'text',
       admin: {
-        description: 'BCP 47 language tag recommended (e.g. en, en-US).',
+        description: 'بهتر است از برچسب زبان BCP 47 استفاده شود (مثل fa، fa-IR، en-US).',
       },
     },
     {
       name: 'contactEmail',
-      label: 'Contact Email',
+      label: 'ایمیل تماس',
       type: 'email',
       admin: {
-        description: 'Optional. Used for site-wide contact links or transactional email defaults.',
+        description: 'اختیاری. برای لینک‌های تماس یا پیش‌فرض‌های ایمیل در سطح سایت استفاده می‌شود.',
       },
     },
     {
       name: 'contactPhone',
-      label: 'Contact Phone',
+      label: 'تلفن تماس',
       type: 'text',
       admin: {
-        description: 'Optional. Store as display-friendly text (frontends can normalize if needed).',
+        description:
+          'اختیاری. به‌صورت متن قابل‌نمایش ذخیره کنید (در صورت نیاز، فرانت‌اند می‌تواند نرمال‌سازی انجام دهد).',
       },
     },
     {
       name: 'socialLinks',
-      label: 'Social Links',
+      label: 'لینک‌های شبکه‌های اجتماعی',
       type: 'array',
       admin: {
-        description: 'Used for site-wide social icons/links.',
+        description: 'برای نمایش آیکون/لینک شبکه‌های اجتماعی در سطح سایت استفاده می‌شود.',
       },
       fields: [
         {
           name: 'label',
-          label: 'Label',
+          label: 'عنوان',
           type: 'text',
           required: true,
           admin: {
-            description: 'Example: LinkedIn, X, Instagram, GitHub.',
+            description: 'مثال: LinkedIn، X، Instagram، GitHub.',
           },
         },
         {
           name: 'url',
-          label: 'URL',
+          label: 'نشانی (URL)',
           type: 'text',
           required: true,
           admin: {
-            description: 'Absolute URL recommended.',
+            description: 'بهتر است URL کامل (Absolute) وارد شود.',
           },
         },
       ],

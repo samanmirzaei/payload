@@ -40,16 +40,17 @@ export const publishFields = (options: PublishFieldsOptions = {}): Field[] => {
   const fields: Field[] = [
     {
       name: statusName,
+      label: 'وضعیت',
       type: 'select',
       required: true,
       defaultValue: 'draft',
       options: [
-        { label: 'Draft', value: 'draft' },
-        { label: 'Published', value: 'published' },
+        { label: 'پیش‌نویس', value: 'draft' },
+        { label: 'منتشر شده', value: 'published' },
       ],
       admin: {
         ...admin,
-        description: 'MVP publishing state. Later steps can integrate Payload drafts/versioning.',
+        description: 'وضعیت انتشار (MVP). در مراحل بعد می‌توان drafts/versioning را یکپارچه کرد.',
       },
     },
   ]
@@ -57,12 +58,13 @@ export const publishFields = (options: PublishFieldsOptions = {}): Field[] => {
   if (includePublishedAt) {
     fields.push({
       name: publishedAtName,
+      label: 'تاریخ انتشار',
       type: 'date',
       admin: {
         ...admin,
         condition: (_data, siblingData) => siblingData?.[statusName] === 'published',
         description:
-          'Optional. Frontends can prefer this for sorting/feeds when set (otherwise fallback to createdAt).',
+          'اختیاری. در صورت تنظیم، فرانت‌اند می‌تواند برای مرتب‌سازی/فید از آن استفاده کند (در غیر این صورت از createdAt).',
       },
     })
   }

@@ -9,76 +9,75 @@ import type { Block } from 'payload'
 export const HeroBlock: Block = {
   slug: 'hero',
   labels: {
-    singular: 'Hero',
-    plural: 'Heroes',
+    singular: 'بنر اصلی',
+    plural: 'بنرهای اصلی',
   },
   fields: [
     {
       name: 'headline',
-      label: 'Headline',
+      label: 'تیتر',
       type: 'text',
       required: true,
     },
     {
       name: 'subheadline',
-      label: 'Subheadline',
+      label: 'زیرتیتر',
       type: 'textarea',
     },
     {
       name: 'primaryButton',
-      label: 'Primary Button',
+      label: 'دکمه اصلی',
       type: 'group',
       admin: {
-        description: 'Optional. If provided, frontends should render a primary CTA button.',
+        description: 'اختیاری. اگر پر شود، فرانت‌اند باید یک دکمه CTA اصلی نمایش دهد.',
       },
       fields: [
         {
           name: 'label',
-          label: 'Label',
+          label: 'متن دکمه',
           type: 'text',
         },
         {
           name: 'href',
-          label: 'Href',
+          label: 'لینک (Href)',
           type: 'text',
           admin: {
-            description: 'Relative (e.g. /contact) or absolute URL.',
+            description: 'می‌تواند نسبی باشد (مثل /contact) یا URL کامل.',
           },
         },
       ],
     },
     {
       name: 'secondaryButton',
-      label: 'Secondary Button',
+      label: 'دکمه دوم',
       type: 'group',
       admin: {
-        description: 'Optional. If provided, frontends should render a secondary CTA button.',
+        description: 'اختیاری. اگر پر شود، فرانت‌اند باید یک دکمه CTA ثانویه نمایش دهد.',
       },
       fields: [
         {
           name: 'label',
-          label: 'Label',
+          label: 'متن دکمه',
           type: 'text',
         },
         {
           name: 'href',
-          label: 'Href',
+          label: 'لینک (Href)',
           type: 'text',
           admin: {
-            description: 'Relative (e.g. /learn-more) or absolute URL.',
+            description: 'می‌تواند نسبی باشد (مثل /learn-more) یا URL کامل.',
           },
         },
       ],
     },
     {
       name: 'backgroundImage',
-      label: 'Background Image',
+      label: 'تصویر پس‌زمینه',
       type: 'relationship',
       relationTo: 'media',
       admin: {
-        description: 'Optional. Background/cover image for the hero.',
+        description: 'اختیاری. تصویر پس‌زمینه/کاور برای این بنر.',
       },
     },
   ],
 }
-

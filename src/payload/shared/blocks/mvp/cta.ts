@@ -3,36 +3,35 @@ import type { Block } from 'payload'
 export const CTABlock: Block = {
   slug: 'cta',
   labels: {
-    singular: 'CTA',
-    plural: 'CTAs',
+    singular: 'فراخوان به اقدام (CTA)',
+    plural: 'بلوک‌های CTA',
   },
   fields: [
     {
       name: 'title',
-      label: 'Title',
+      label: 'عنوان',
       type: 'text',
       required: true,
     },
     {
       name: 'description',
-      label: 'Description',
+      label: 'توضیحات',
       type: 'textarea',
     },
     {
       name: 'buttonLabel',
-      label: 'Button Label',
+      label: 'متن دکمه',
       type: 'text',
       required: true,
     },
     {
       name: 'buttonHref',
-      label: 'Button Href',
+      label: 'لینک دکمه',
       type: 'text',
       required: true,
       admin: {
-        description: 'Relative (e.g. /contact) or absolute URL.',
+        description: 'می‌تواند نسبی باشد (مثل /contact) یا URL کامل.',
       },
     },
   ],
 }
-

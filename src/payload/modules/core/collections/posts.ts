@@ -12,9 +12,13 @@ import { ensurePublishedAt, generateSlugHook } from '../../../shared/hooks'
  */
 export const Posts: CollectionConfig = {
   slug: 'posts',
+  labels: {
+    singular: 'نوشته',
+    plural: 'نوشته‌ها',
+  },
   admin: {
     useAsTitle: 'title',
-    description: 'Reusable posts for announcements, blogs, and editorial content.',
+    description: 'نوشته‌های قابل استفادهٔ مجدد برای وبلاگ، خبر و محتوای تحریریه.',
   },
   access: {
     read: publicRead,
@@ -29,46 +33,46 @@ export const Posts: CollectionConfig = {
   fields: [
     {
       name: 'title',
-      label: 'Title',
+      label: 'عنوان',
       type: 'text',
       required: true,
     },
     slugField(),
     {
       name: 'excerpt',
-      label: 'Excerpt',
+      label: 'خلاصه',
       type: 'textarea',
       admin: {
-        description: 'Optional short summary for cards, feeds, and previews.',
+        description: 'اختیاری. خلاصهٔ کوتاه برای کارت‌ها، فیدها و پیش‌نمایش‌ها.',
       },
     },
     {
       name: 'featuredImage',
-      label: 'Featured Image',
+      label: 'تصویر شاخص',
       type: 'relationship',
       relationTo: 'media',
       admin: {
         description:
-          'Optional. Used for previews and social sharing. TODO (future): align SEO helpers to media relations if desired.',
+          'اختیاری. برای پیش‌نمایش و اشتراک‌گذاری اجتماعی استفاده می‌شود. (TODO: در صورت نیاز با Media برای سئو هم‌راستا شود.)',
       },
     },
     {
       name: 'layout',
-      label: 'Content / Layout',
+      label: 'محتوا / چیدمان',
       type: 'blocks',
       blocks: layoutBlocks,
       admin: {
-        description: 'Post content composed from reusable blocks.',
+        description: 'محتوای نوشته با بلوک‌های قابل استفادهٔ مجدد ساخته می‌شود.',
       },
     },
     {
       name: 'categories',
-      label: 'Categories',
+      label: 'دسته‌بندی‌ها',
       type: 'relationship',
       relationTo: 'categories',
       hasMany: true,
       admin: {
-        description: 'Optional taxonomy for grouping/filtering.',
+        description: 'اختیاری. برای دسته‌بندی و فیلتر کردن.',
       },
     },
     seoFields(),

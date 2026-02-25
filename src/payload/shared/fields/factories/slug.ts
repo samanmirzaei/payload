@@ -16,10 +16,10 @@ export type SlugFieldOptions = {
 export const slugField = (options: SlugFieldOptions = {}): Field => {
   const {
     name = 'slug',
-    label = 'Slug',
+    label = 'نامک (Slug)',
     required = true,
     unique = true,
-    adminDescription = 'URL-safe identifier. TODO: auto-generate from title via hook.',
+    adminDescription = 'شناسهٔ مناسب برای URL. (TODO: تولید خودکار از روی عنوان با hook)',
   } = options
 
   return {

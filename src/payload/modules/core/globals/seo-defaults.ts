@@ -9,9 +9,9 @@ import { adminOrEditor, publicRead } from '../../../shared/access'
  */
 export const SeoDefaults: GlobalConfig = {
   slug: 'seo-defaults',
-  label: 'SEO Defaults',
+  label: 'پیش‌فرض‌های سئو',
   admin: {
-    description: 'Fallback SEO values applied by frontends when page-level SEO fields are empty.',
+    description: 'مقادیر پیش‌فرض سئو که وقتی سئوی صفحه خالی است، توسط فرانت‌اندها اعمال می‌شود.',
   },
   access: {
     read: publicRead,
@@ -20,26 +20,26 @@ export const SeoDefaults: GlobalConfig = {
   fields: [
     {
       name: 'defaultTitle',
-      label: 'Default Title',
+      label: 'عنوان پیش‌فرض',
       type: 'text',
       admin: {
-        description: 'Used when a page does not provide a meta title.',
+        description: 'وقتی یک صفحه عنوان متا ندارد استفاده می‌شود.',
       },
     },
     {
       name: 'titleTemplate',
-      label: 'Title Template',
+      label: 'قالب عنوان',
       type: 'text',
       admin: {
-        description: 'Example: %s | Brand (where %s is replaced with the page title).',
+        description: 'مثال: %s | Brand (جایی که %s با عنوان صفحه جایگزین می‌شود).',
       },
     },
     {
       name: 'defaultMetaDescription',
-      label: 'Default Meta Description',
+      label: 'توضیح متای پیش‌فرض',
       type: 'textarea',
       admin: {
-        description: 'Used when a page does not provide a meta description.',
+        description: 'وقتی یک صفحه توضیح متا ندارد استفاده می‌شود.',
       },
     },
     /**
@@ -48,52 +48,51 @@ export const SeoDefaults: GlobalConfig = {
      */
     {
       name: 'defaultOgImageUrl',
-      label: 'Default OG Image URL',
+      label: 'نشانی تصویر پیش‌فرض OG',
       type: 'text',
       admin: {
-        description:
-          'Temporary: URL string. TODO: replace with media relationship once a Media module exists.',
+        description: 'موقت: URL به‌صورت متن. TODO: در آینده با رابطه به Media جایگزین شود.',
       },
     },
     {
       name: 'robots',
-      label: 'Robots Defaults',
+      label: 'پیش‌فرض‌های Robots',
       type: 'group',
       fields: [
         {
           name: 'noIndex',
-          label: 'Default noindex',
+          label: 'noindex پیش‌فرض',
           type: 'checkbox',
           defaultValue: false,
           admin: {
-            description: 'If enabled, frontends should default to noindex unless overridden per-page.',
+            description: 'اگر فعال باشد، پیش‌فرض فرانت‌اندها noindex است مگر اینکه در صفحه بازنویسی شود.',
           },
         },
         {
           name: 'noFollow',
-          label: 'Default nofollow',
+          label: 'nofollow پیش‌فرض',
           type: 'checkbox',
           defaultValue: false,
           admin: {
-            description: 'If enabled, frontends should default to nofollow unless overridden per-page.',
+            description: 'اگر فعال باشد، پیش‌فرض فرانت‌اندها nofollow است مگر اینکه در صفحه بازنویسی شود.',
           },
         },
       ],
     },
     {
       name: 'organization',
-      label: 'Organization Schema',
+      label: 'طرح‌واره سازمان (Schema.org)',
       type: 'group',
       admin: {
-        description: 'Basic Organization schema fields used by frontends for structured data.',
+        description: 'فیلدهای پایه برای داده‌های ساختاریافته (Organization) که در فرانت‌اند استفاده می‌شود.',
       },
       fields: [
         {
           name: 'name',
-          label: 'Organization Name',
+          label: 'نام سازمان',
           type: 'text',
           admin: {
-            description: 'Often matches Site Settings → Site Name.',
+            description: 'اغلب با «تنظیمات سایت → نام سایت» یکسان است.',
           },
         },
         /**
@@ -101,28 +100,27 @@ export const SeoDefaults: GlobalConfig = {
          */
         {
           name: 'logoUrl',
-          label: 'Logo URL',
+          label: 'نشانی لوگو (URL)',
           type: 'text',
           admin: {
-            description:
-              'Temporary: URL string. TODO: replace with media relationship once a Media module exists.',
+            description: 'موقت: URL به‌صورت متن. TODO: در آینده با رابطه به Media جایگزین شود.',
           },
         },
         {
           name: 'sameAsLinks',
-          label: 'Same As Links',
+          label: 'لینک‌های SameAs',
           type: 'array',
           admin: {
-            description: 'URLs for social profiles (used by schema.org Organization.sameAs).',
+            description: 'URL پروفایل‌های اجتماعی (برای Organization.sameAs در schema.org).',
           },
           fields: [
             {
               name: 'url',
-              label: 'URL',
+              label: 'نشانی (URL)',
               type: 'text',
               required: true,
               admin: {
-                description: 'Absolute URL recommended.',
+                description: 'بهتر است URL کامل (Absolute) وارد شود.',
               },
             },
           ],
@@ -131,3 +129,4 @@ export const SeoDefaults: GlobalConfig = {
     },
   ],
 }
+

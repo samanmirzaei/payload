@@ -6,6 +6,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 
 import { createModuleRegistry } from './modules/registry'
 import { coreModules } from './modules/core'
+import { commerceModules } from './modules/commerce'
 import { seedDev } from './seed'
 
 /**
@@ -26,7 +27,7 @@ const secret =
 const resolvedSecret = secret ?? 'missing-payload-secret'
 const databaseUrl = process.env.DATABASE_URL ?? 'postgres://payload:payload@localhost:5432/payload'
 
-const registry = createModuleRegistry([...coreModules])
+const registry = createModuleRegistry([...coreModules, ...commerceModules])
 
 export default buildConfig({
   secret: resolvedSecret,

@@ -14,9 +14,13 @@ import { ensurePublishedAt, generateSlugHook } from '../../../shared/hooks'
  */
 export const Products: CollectionConfig = {
   slug: 'products',
+  labels: {
+    singular: 'محصول',
+    plural: 'محصولات',
+  },
   admin: {
     useAsTitle: 'title',
-    description: 'Generic products collection for ecommerce projects.',
+    description: 'محصولات عمومی برای پروژه‌های فروشگاهی.',
   },
   access: {
     read: publicRead,
@@ -31,67 +35,67 @@ export const Products: CollectionConfig = {
   fields: [
     {
       name: 'title',
-      label: 'Title',
+      label: 'عنوان',
       type: 'text',
       required: true,
     },
     slugField(),
     {
       name: 'sku',
-      label: 'SKU',
+      label: 'کد کالا (SKU)',
       type: 'text',
       admin: {
-        description: 'Optional internal identifier used by your commerce/inventory systems.',
+        description: 'اختیاری. شناسهٔ داخلی برای سیستم‌های فروش/انبارداری.',
       },
     },
     {
       name: 'shortDescription',
-      label: 'Short Description',
+      label: 'توضیح کوتاه',
       type: 'textarea',
       admin: {
-        description: 'Optional. Used for product cards, listings, and previews.',
+        description: 'اختیاری. برای کارت محصول، لیست‌ها و پیش‌نمایش‌ها.',
       },
     },
     {
       type: 'collapsible',
-      label: 'Media',
+      label: 'رسانه',
       admin: {
         initCollapsed: false,
-        description: 'Product images used for listings and detail pages.',
+        description: 'تصاویر محصول برای لیست‌ها و صفحهٔ جزئیات.',
       },
       fields: [
         {
           name: 'featuredImage',
-          label: 'Featured Image',
+          label: 'تصویر شاخص',
           type: 'relationship',
           relationTo: 'media',
           admin: {
-            description: 'Optional. Primary image used for listings and social previews.',
+            description: 'اختیاری. تصویر اصلی برای لیست‌ها و پیش‌نمایش اجتماعی.',
           },
         },
         {
           name: 'gallery',
-          label: 'Gallery',
+          label: 'گالری',
           type: 'relationship',
           relationTo: 'media',
           hasMany: true,
           admin: {
-            description: 'Optional additional product images.',
+            description: 'اختیاری. تصاویر بیشتر برای محصول.',
           },
         },
       ],
     },
     {
       type: 'collapsible',
-      label: 'Pricing',
+      label: 'قیمت‌گذاری',
       admin: {
         initCollapsed: false,
-        description: 'MVP pricing fields (currency handling is integration-specific).',
+        description: 'فیلدهای قیمت (MVP). مدیریت واحد پول در سطح یکپارچه‌سازی/فرانت‌اند انجام می‌شود.',
       },
       fields: [
         {
           name: 'basePrice',
-          label: 'Base Price',
+          label: 'قیمت پایه',
           type: 'number',
           required: true,
           min: 0,
@@ -101,7 +105,7 @@ export const Products: CollectionConfig = {
         },
         {
           name: 'salePrice',
-          label: 'Sale Price',
+          label: 'قیمت فروش',
           type: 'number',
           min: 0,
           validate: (
@@ -116,7 +120,7 @@ export const Products: CollectionConfig = {
             return true
           },
           admin: {
-            description: 'Optional. Must be less than or equal to Base Price.',
+            description: 'اختیاری. باید کمتر یا مساوی قیمت پایه باشد.',
             placeholder: '0',
           },
         },
@@ -124,31 +128,31 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'productCategories',
-      label: 'Product Categories',
+      label: 'دسته‌بندی‌های محصول',
       type: 'relationship',
       relationTo: 'product-categories',
       hasMany: true,
       admin: {
-        description: 'Optional taxonomy for filtering and navigation.',
+        description: 'اختیاری. برای فیلتر کردن و ناوبری.',
       },
     },
     {
       name: 'attributes',
-      label: 'Attributes',
+      label: 'ویژگی‌ها',
       type: 'array',
       admin: {
-        description: 'Optional key/value attributes (e.g. Material: Cotton, Size: Large).',
+        description: 'اختیاری. ویژگی‌های کلید/مقدار (مثلاً جنس: پنبه، سایز: بزرگ).',
       },
       fields: [
         {
           name: 'name',
-          label: 'Name',
+          label: 'نام',
           type: 'text',
           required: true,
         },
         {
           name: 'value',
-          label: 'Value',
+          label: 'مقدار',
           type: 'text',
           required: true,
         },
@@ -156,48 +160,48 @@ export const Products: CollectionConfig = {
     },
     {
       type: 'collapsible',
-      label: 'Variants',
+      label: 'تنوع‌ها',
       admin: {
         initCollapsed: true,
         description:
-          'MVP variants. Keep lightweight; advanced option matrices can be added later if needed.',
+          'تنوع‌ها (MVP). ساده نگه دارید؛ در صورت نیاز، مدل‌های پیشرفته‌تر بعداً اضافه می‌شوند.',
       },
       fields: [
         {
           name: 'variants',
-          label: 'Variants',
+          label: 'تنوع‌ها',
           type: 'array',
           fields: [
             {
               name: 'sku',
-              label: 'SKU',
+              label: 'کد کالا (SKU)',
               type: 'text',
               admin: {
-                description: 'Optional variant SKU.',
+                description: 'اختیاری. کد کالا برای این تنوع.',
               },
             },
             {
               name: 'price',
-              label: 'Price',
+              label: 'قیمت',
               type: 'number',
               required: true,
               min: 0,
             },
             {
               name: 'stock',
-              label: 'Stock',
+              label: 'موجودی',
               type: 'number',
               min: 0,
               admin: {
-                description: 'Optional stock count. TODO: replace with inventory module later.',
+                description: 'اختیاری. TODO: در آینده با ماژول موجودی/انبار جایگزین شود.',
               },
             },
             {
               name: 'attributesSummary',
-              label: 'Attributes Summary',
+              label: 'خلاصه ویژگی‌ها',
               type: 'text',
               admin: {
-                description: 'Optional. Example: "Size: M / Color: Black".',
+                description: 'اختیاری. مثال: «سایز: M / رنگ: مشکی».',
               },
             },
           ],
@@ -206,21 +210,21 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'faq',
-      label: 'FAQ',
+      label: 'پرسش‌های متداول',
       type: 'array',
       admin: {
-        description: 'Optional product-specific questions.',
+        description: 'اختیاری. پرسش‌های مربوط به همین محصول.',
       },
       fields: [
         {
           name: 'question',
-          label: 'Question',
+          label: 'پرسش',
           type: 'text',
           required: true,
         },
         {
           name: 'answer',
-          label: 'Answer',
+          label: 'پاسخ',
           type: 'textarea',
           required: true,
         },
@@ -228,11 +232,11 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'layout',
-      label: 'Layout',
+      label: 'چیدمان',
       type: 'blocks',
       blocks: layoutBlocks,
       admin: {
-        description: 'Product detail layout composed from reusable blocks.',
+        description: 'چیدمان صفحهٔ محصول با بلوک‌های قابل استفادهٔ مجدد ساخته می‌شود.',
       },
     },
     seoFields(),

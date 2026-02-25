@@ -12,9 +12,13 @@ import { ensurePublishedAt, generateSlugHook } from '../../../shared/hooks'
  */
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  labels: {
+    singular: 'صفحه',
+    plural: 'صفحه‌ها',
+  },
   admin: {
     useAsTitle: 'title',
-    description: 'Reusable pages for corporate sites, marketing, and storefront content.',
+    description: 'صفحه‌های قابل استفادهٔ مجدد برای وب‌سایت‌های شرکتی، مارکتینگ و محتوا.',
   },
   access: {
     read: publicRead,
@@ -29,18 +33,18 @@ export const Pages: CollectionConfig = {
   fields: [
     {
       name: 'title',
-      label: 'Title',
+      label: 'عنوان',
       type: 'text',
       required: true,
     },
     slugField(),
     {
       name: 'layout',
-      label: 'Layout',
+      label: 'چیدمان',
       type: 'blocks',
       blocks: layoutBlocks,
       admin: {
-        description: 'Page layout composed from reusable blocks.',
+        description: 'چیدمان صفحه با بلوک‌های قابل استفادهٔ مجدد ساخته می‌شود.',
       },
     },
     seoFields(),

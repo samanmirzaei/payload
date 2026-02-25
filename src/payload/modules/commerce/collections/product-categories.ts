@@ -10,9 +10,13 @@ import { generateSlugHook } from '../../../shared/hooks'
  */
 export const ProductCategories: CollectionConfig = {
   slug: 'product-categories',
+  labels: {
+    singular: 'دسته‌بندی محصول',
+    plural: 'دسته‌بندی‌های محصول',
+  },
   admin: {
     useAsTitle: 'title',
-    description: 'Category taxonomy for products.',
+    description: 'دسته‌بندی‌های محصولات.',
   },
   access: {
     read: publicRead,
@@ -26,17 +30,17 @@ export const ProductCategories: CollectionConfig = {
   fields: [
     {
       name: 'title',
-      label: 'Title',
+      label: 'عنوان',
       type: 'text',
       required: true,
     },
     slugField({
       adminDescription:
-        'URL-safe identifier for this product category. TODO: auto-generate from title via hook.',
+        'شناسهٔ مناسب برای URL. (TODO: تولید خودکار از روی عنوان با hook)',
     }),
     {
       name: 'description',
-      label: 'Description',
+      label: 'توضیحات',
       type: 'textarea',
     },
   ],

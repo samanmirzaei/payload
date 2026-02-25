@@ -9,18 +9,17 @@ import type { Block } from 'payload'
 export const RichTextBlock: Block = {
   slug: 'richText',
   labels: {
-    singular: 'Rich Text',
-    plural: 'Rich Text Blocks',
+    singular: 'متن',
+    plural: 'بلوک‌های متن',
   },
   fields: [
     {
       name: 'content',
-      label: 'Content',
+      label: 'محتوا',
       type: 'textarea',
       admin: {
-        description: 'Temporary. TODO: replace with a rich text editor field.',
+        description: 'موقت. TODO: در آینده با فیلد ویرایشگر متن غنی (Rich Text) جایگزین شود.',
       },
     },
   ],
 }
-

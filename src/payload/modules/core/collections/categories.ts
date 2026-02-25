@@ -9,9 +9,13 @@ import { generateSlugHook } from '../../../shared/hooks'
  */
 export const Categories: CollectionConfig = {
   slug: 'categories',
+  labels: {
+    singular: 'دسته‌بندی',
+    plural: 'دسته‌بندی‌ها',
+  },
   admin: {
     useAsTitle: 'title',
-    description: 'Reusable category taxonomy.',
+    description: 'طبقه‌بندی عمومی و قابل استفادهٔ مجدد.',
   },
   access: {
     read: publicRead,
@@ -25,14 +29,14 @@ export const Categories: CollectionConfig = {
   fields: [
     {
       name: 'title',
-      label: 'Title',
+      label: 'عنوان',
       type: 'text',
       required: true,
     },
     slugField(),
     {
       name: 'description',
-      label: 'Description',
+      label: 'توضیحات',
       type: 'textarea',
     },
   ],
