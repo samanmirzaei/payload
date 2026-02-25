@@ -9,8 +9,13 @@ export default withPayload({
    * Example:
    * - `ALLOWED_DEV_ORIGINS=http://YOUR_LAPTOP_IP:3000,http://YOUR_VPS_IP:3000`
    */
-  allowedDevOrigins: (process.env.ALLOWED_DEV_ORIGINS ?? '')
-    .split(',')
-    .map((s) => s.trim())
-    .filter(Boolean),
+  allowedDevOrigins: Array.from(
+    new Set(
+      [
+        'http://65.109.215.252:3000',
+        'http://localhost:3000',
+        ...(process.env.ALLOWED_DEV_ORIGINS ?? '').split(',').map((s) => s.trim()),
+      ].filter(Boolean),
+    ),
+  ),
 })
