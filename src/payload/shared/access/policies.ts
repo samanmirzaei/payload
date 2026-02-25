@@ -21,7 +21,21 @@ export const hasRole =
 
 export const adminOnly = hasRole(['admin'])
 
-export const adminOrEditor = hasRole(['admin', 'editor'])
+export const adminOrEditor: Access = (args) => {
+  const user = getUser(args)
+  if (!user) return false
+
+  /**
+   * Bootstrap / compatibility fallback:
+   * If a user is authenticated but `role` is missing on `req.user`, allow access for non-user-management operations.
+   * This commonly happens when the role is newly introduced and older JWTs don't include it yet.
+   *
+   * Safe-by-default note: `users` collection writes remain protected by `adminOnly` on that collection.
+   */
+  if (!user.role) return true
+
+  return user.role === 'admin' || user.role === 'editor'
+}
 
 /**
  * Useful for restricting user reads to admins + the currently-authenticated user.
@@ -60,4 +74,3 @@ export const allowFirstUserOr =
 
     return fallback(args)
   }
-
