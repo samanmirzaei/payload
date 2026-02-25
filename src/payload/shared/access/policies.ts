@@ -25,6 +25,27 @@ export const adminOrEditor: Access = (args) => {
   const user = getUser(args)
   if (!user) return false
 
+  const isDev = process.env.NODE_ENV === 'development'
+  const debug = isDev && process.env.PAYLOAD_DEBUG_ACCESS === 'true'
+
+  if (debug) {
+    // Dev-only: helps diagnose cases where auth cookies/JWT aren't being applied as expected.
+    // Avoid logging sensitive data beyond what's needed to debug access.
+    // eslint-disable-next-line no-console
+    console.log('[access adminOrEditor]', {
+      id: user.id,
+      role: user.role,
+      path: args.req?.path,
+      method: args.req?.method,
+      collection: (args as any)?.collection?.slug,
+      global: (args as any)?.global?.slug,
+    })
+  }
+
+  // Dev-only fallback: allow any authenticated user to write content while debugging auth wiring.
+  // Production remains role-based.
+  if (isDev) return true
+
   /**
    * Bootstrap / compatibility fallback:
    * If a user is authenticated but `role` is missing on `req.user`, allow access for non-user-management operations.
