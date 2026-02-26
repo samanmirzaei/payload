@@ -3,6 +3,7 @@ import path from 'node:path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { en } from '@payloadcms/translations/languages/en'
 import { fa } from '@payloadcms/translations/languages/fa'
 
@@ -34,6 +35,7 @@ const registry = createModuleRegistry([...coreModules, ...commerceModules])
 export default buildConfig({
   secret: resolvedSecret,
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  editor: lexicalEditor(),
   onInit: async (payload) => {
     /**
      * Dev-only seed entrypoint.
