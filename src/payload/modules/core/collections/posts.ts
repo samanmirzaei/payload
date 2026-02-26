@@ -1,8 +1,9 @@
 import type { CollectionConfig } from 'payload'
 
-import { publishFields, seoFields, slugField } from '../../../shared/fields'
 import { layoutBlocks } from '../../../shared/blocks'
 import { adminOrEditor, publicRead } from '../../../shared/access'
+import { publishFields, seoFields, slugField } from '../../../shared/fields'
+import { adminText, tr } from '../../../shared/i18n'
 import { ensurePublishedAt, generateSlugHook } from '../../../shared/hooks'
 
 /**
@@ -13,13 +14,16 @@ import { ensurePublishedAt, generateSlugHook } from '../../../shared/hooks'
 export const Posts: CollectionConfig = {
   slug: 'posts',
   labels: {
-    singular: 'نوشته',
-    plural: 'نوشته‌ها',
+    singular: adminText.collections.posts.singular,
+    plural: adminText.collections.posts.plural,
   },
   admin: {
-    group: 'محتوا',
+    group: adminText.groups.content,
     useAsTitle: 'title',
-    description: 'نوشته‌های قابل استفادهٔ مجدد برای وبلاگ، خبر و محتوای تحریریه.',
+    description: tr(
+      'Reusable posts for blogs, news, and editorial content.',
+      'نوشته‌های قابل استفادهٔ مجدد برای وبلاگ، خبر و محتوای تحریریه.',
+    ),
   },
   access: {
     read: publicRead,
@@ -34,49 +38,58 @@ export const Posts: CollectionConfig = {
   fields: [
     {
       name: 'title',
-      label: 'عنوان',
+      label: adminText.fields.title,
       type: 'text',
       required: true,
     },
     slugField(),
     {
       name: 'excerpt',
-      label: 'خلاصه',
+      label: tr('Excerpt', 'خلاصه'),
       type: 'textarea',
       admin: {
-        description: 'اختیاری. خلاصهٔ کوتاه برای کارت‌ها، فیدها و پیش‌نمایش‌ها.',
+        description: tr(
+          'Optional. Used for cards, listings, and previews.',
+          'اختیاری. خلاصهٔ کوتاه برای کارت‌ها، فیدها و پیش‌نمایش‌ها.',
+        ),
       },
     },
     {
       name: 'featuredImage',
-      label: 'تصویر شاخص',
+      label: tr('Featured Image', 'تصویر شاخص'),
       type: 'relationship',
       relationTo: 'media',
       admin: {
-        description:
-          'اختیاری. برای پیش‌نمایش و اشتراک‌گذاری اجتماعی استفاده می‌شود. (TODO: در صورت نیاز با Media برای سئو هم‌راستا شود.)',
+        description: tr(
+          'Optional. Used for previews and social sharing.',
+          'اختیاری. برای پیش‌نمایش و اشتراک‌گذاری اجتماعی استفاده می‌شود.',
+        ),
       },
     },
     {
       name: 'layout',
-      label: 'محتوا / چیدمان',
+      label: adminText.fields.contentLayout,
       type: 'blocks',
       blocks: layoutBlocks,
       admin: {
-        description: 'محتوای نوشته با بلوک‌های قابل استفادهٔ مجدد ساخته می‌شود.',
+        description: tr(
+          'Build the post content using reusable blocks.',
+          'محتوای نوشته را با بلوک‌های قابل استفادهٔ مجدد بسازید.',
+        ),
       },
     },
     {
       name: 'categories',
-      label: 'دسته‌بندی‌ها',
+      label: adminText.collections.categories.plural,
       type: 'relationship',
       relationTo: 'categories',
       hasMany: true,
       admin: {
-        description: 'اختیاری. برای دسته‌بندی و فیلتر کردن.',
+        description: tr('Optional. Useful for taxonomy and filtering.', 'اختیاری. برای دسته‌بندی و فیلترکردن.'),
       },
     },
     seoFields(),
     ...publishFields(),
   ],
 }
+

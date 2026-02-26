@@ -98,11 +98,10 @@ export default function AdminActions() {
       setCookie(lngCookieName, nextLanguage)
       applyDocumentLanguage(nextLanguage)
 
-      // Keep Payload's internal i18n in sync. Reload ensures server-rendered admin layout uses the new language/dir.
-      await i18n?.changeLanguage?.(nextLanguage)
+      // Reload ensures server-rendered admin layout uses the new language/dir based on the cookie.
       window.location.reload()
     },
-    [i18n, lngCookieName],
+    [lngCookieName],
   )
 
   const toggleTheme = useCallback(() => {
@@ -139,4 +138,3 @@ export default function AdminActions() {
     </div>
   )
 }
-

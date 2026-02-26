@@ -1,7 +1,8 @@
 import type { CollectionConfig } from 'payload'
 
-import { slugField } from '../../../shared/fields'
 import { adminOrEditor, publicRead } from '../../../shared/access'
+import { slugField } from '../../../shared/fields'
+import { adminText, tr } from '../../../shared/i18n'
 import { generateSlugHook } from '../../../shared/hooks'
 
 /**
@@ -11,13 +12,13 @@ import { generateSlugHook } from '../../../shared/hooks'
 export const ProductCategories: CollectionConfig = {
   slug: 'product-categories',
   labels: {
-    singular: 'دسته‌بندی محصول',
-    plural: 'دسته‌بندی‌های محصول',
+    singular: adminText.collections.productCategories.singular,
+    plural: adminText.collections.productCategories.plural,
   },
   admin: {
-    group: 'فروشگاه',
+    group: adminText.groups.store,
     useAsTitle: 'title',
-    description: 'دسته‌بندی‌های محصولات.',
+    description: tr('Product taxonomy for organizing products.', 'دسته‌بندی‌های محصولات.'),
   },
   access: {
     read: publicRead,
@@ -31,18 +32,21 @@ export const ProductCategories: CollectionConfig = {
   fields: [
     {
       name: 'title',
-      label: 'عنوان',
+      label: adminText.fields.title,
       type: 'text',
       required: true,
     },
     slugField({
-      adminDescription:
+      adminDescription: tr(
+        'URL-safe identifier for this product category. (TODO: auto-generate from title via hook)',
         'شناسهٔ مناسب برای URL. (TODO: تولید خودکار از روی عنوان با hook)',
+      ),
     }),
     {
       name: 'description',
-      label: 'توضیحات',
+      label: adminText.fields.description,
       type: 'textarea',
     },
   ],
 }
+

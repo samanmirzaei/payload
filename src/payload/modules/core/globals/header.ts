@@ -1,13 +1,14 @@
 import type { GlobalConfig } from 'payload'
 
 import { adminOrEditor, publicRead } from '../../../shared/access'
+import { adminText, tr } from '../../../shared/i18n'
 
 export const Header: GlobalConfig = {
   slug: 'header',
-  label: 'سربرگ',
+  label: adminText.globals.header,
   admin: {
-    group: 'تنظیمات',
-    description: 'محتوای سربرگ سایت (ناوبری، اعلان‌ها) که در فرانت‌اندها استفاده می‌شود.',
+    group: adminText.groups.settings,
+    description: tr('Site-wide header content (navigation, announcements).', 'محتوای سربرگ سایت (ناوبری، اعلان‌ها).'),
   },
   access: {
     read: publicRead,
@@ -16,38 +17,41 @@ export const Header: GlobalConfig = {
   fields: [
     {
       name: 'announcementText',
-      label: 'متن اعلان',
+      label: tr('Announcement Text', 'متن اعلان'),
       type: 'text',
       admin: {
-        description: 'اختیاری. متن کوتاه اعلان (نمایش/زمان‌بندی در اختیار فرانت‌اند است).',
+        description: tr(
+          'Optional short announcement (frontends decide how/when to display).',
+          'اختیاری. متن کوتاه اعلان (نمایش/زمان‌بندی در اختیار فرانت‌اند است).',
+        ),
       },
     },
     {
       name: 'navigationItems',
-      label: 'آیتم‌های ناوبری',
+      label: tr('Navigation Items', 'آیتم‌های ناوبری'),
       type: 'array',
       admin: {
-        description: 'ناوبری اصلی که در فرانت‌اند استفاده می‌شود.',
+        description: tr('Primary navigation used by frontends.', 'ناوبری اصلی که در فرانت‌اند استفاده می‌شود.'),
       },
       fields: [
         {
           name: 'label',
-          label: 'عنوان',
+          label: tr('Label', 'عنوان'),
           type: 'text',
           required: true,
         },
         {
           name: 'href',
-          label: 'لینک (Href)',
+          label: tr('Href', 'لینک (Href)'),
           type: 'text',
           required: true,
           admin: {
-            description: 'می‌تواند نسبی باشد (مثل /about) یا URL کامل.',
+            description: tr('Relative (e.g. /about) or absolute URL.', 'می‌تواند نسبی باشد (مثل /about) یا URL کامل.'),
           },
         },
         {
           name: 'openInNewTab',
-          label: 'باز شدن در تب جدید',
+          label: tr('Open In New Tab', 'باز شدن در تب جدید'),
           type: 'checkbox',
           defaultValue: false,
         },
@@ -55,3 +59,4 @@ export const Header: GlobalConfig = {
     },
   ],
 }
+

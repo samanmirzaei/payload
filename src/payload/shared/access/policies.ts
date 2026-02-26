@@ -35,8 +35,8 @@ export const adminOrEditor: Access = (args) => {
     console.log('[access adminOrEditor]', {
       id: user.id,
       role: user.role,
-      path: args.req?.path,
-      method: args.req?.method,
+      path: (args.req as any)?.path,
+      method: (args.req as any)?.method,
       collection: (args as any)?.collection?.slug,
       global: (args as any)?.global?.slug,
     })

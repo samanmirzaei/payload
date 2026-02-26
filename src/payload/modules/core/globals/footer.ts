@@ -1,13 +1,14 @@
 import type { GlobalConfig } from 'payload'
 
 import { adminOrEditor, publicRead } from '../../../shared/access'
+import { adminText, tr } from '../../../shared/i18n'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
-  label: 'پابرگ',
+  label: adminText.globals.footer,
   admin: {
-    group: 'تنظیمات',
-    description: 'محتوای پابرگ سایت (ناوبری، یادداشت‌ها، موارد حقوقی) که در فرانت‌اندها استفاده می‌شود.',
+    group: adminText.groups.settings,
+    description: tr('Site-wide footer content (navigation, notes, legal).', 'محتوای پابرگ سایت (ناوبری، یادداشت‌ها، موارد حقوقی).'),
   },
   access: {
     read: publicRead,
@@ -16,38 +17,38 @@ export const Footer: GlobalConfig = {
   fields: [
     {
       name: 'copyrightText',
-      label: 'متن کپی‌رایت',
+      label: tr('Copyright Text', 'متن کپی‌رایت'),
       type: 'text',
       admin: {
-        description: 'اختیاری. مثال: © 2026 نام شرکت. همه حقوق محفوظ است.',
+        description: tr('Optional. Example: © 2026 Company Name. All rights reserved.', 'اختیاری. مثال: © 2026 نام شرکت. همه حقوق محفوظ است.'),
       },
     },
     {
       name: 'footerNavigationItems',
-      label: 'آیتم‌های ناوبری پابرگ',
+      label: tr('Footer Navigation Items', 'آیتم‌های ناوبری پابرگ'),
       type: 'array',
       admin: {
-        description: 'ناوبری ثانویه/پابرگ که در فرانت‌اند استفاده می‌شود.',
+        description: tr('Secondary/footer navigation used by frontends.', 'ناوبری ثانویه/پابرگ که در فرانت‌اند استفاده می‌شود.'),
       },
       fields: [
         {
           name: 'label',
-          label: 'عنوان',
+          label: tr('Label', 'عنوان'),
           type: 'text',
           required: true,
         },
         {
           name: 'href',
-          label: 'لینک (Href)',
+          label: tr('Href', 'لینک (Href)'),
           type: 'text',
           required: true,
           admin: {
-            description: 'می‌تواند نسبی باشد (مثل /privacy) یا URL کامل.',
+            description: tr('Relative (e.g. /privacy) or absolute URL.', 'می‌تواند نسبی باشد (مثل /privacy) یا URL کامل.'),
           },
         },
         {
           name: 'openInNewTab',
-          label: 'باز شدن در تب جدید',
+          label: tr('Open In New Tab', 'باز شدن در تب جدید'),
           type: 'checkbox',
           defaultValue: false,
         },
@@ -55,11 +56,12 @@ export const Footer: GlobalConfig = {
     },
     {
       name: 'footerNote',
-      label: 'یادداشت پابرگ',
+      label: tr('Footer Note', 'یادداشت پابرگ'),
       type: 'textarea',
       admin: {
-        description: 'اختیاری. یادداشت طولانی‌تر (مثل توضیحات حقوقی، آدرس، ساعت کاری).',
+        description: tr('Optional longer note (e.g. disclaimers, address, hours).', 'اختیاری. یادداشت طولانی‌تر (مثل توضیحات حقوقی، آدرس، ساعت کاری).'),
       },
     },
   ],
 }
+

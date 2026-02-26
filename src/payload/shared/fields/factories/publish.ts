@@ -1,5 +1,7 @@
 import type { Field } from 'payload'
 
+import { adminText, tr } from '../../i18n'
+
 export type PublishStatus = 'draft' | 'published'
 
 export type PublishFieldsOptions = {
@@ -40,17 +42,20 @@ export const publishFields = (options: PublishFieldsOptions = {}): Field[] => {
   const fields: Field[] = [
     {
       name: statusName,
-      label: 'وضعیت',
+      label: adminText.fields.status,
       type: 'select',
       required: true,
       defaultValue: 'draft',
       options: [
-        { label: 'پیش‌نویس', value: 'draft' },
-        { label: 'منتشر شده', value: 'published' },
+        { label: tr('Draft', 'پیش‌نویس'), value: 'draft' },
+        { label: tr('Published', 'منتشر شده'), value: 'published' },
       ],
       admin: {
         ...admin,
-        description: 'وضعیت انتشار (MVP). در مراحل بعد می‌توان drafts/versioning را یکپارچه کرد.',
+        description: tr(
+          'Publishing status (MVP). You can integrate Payload drafts/versioning later.',
+          'وضعیت انتشار (MVP). در مراحل بعد می‌توان drafts/versioning را یکپارچه کرد.',
+        ),
       },
     },
   ]
@@ -58,13 +63,15 @@ export const publishFields = (options: PublishFieldsOptions = {}): Field[] => {
   if (includePublishedAt) {
     fields.push({
       name: publishedAtName,
-      label: 'تاریخ انتشار',
+      label: adminText.fields.publishedAt,
       type: 'date',
       admin: {
         ...admin,
         condition: (_data, siblingData) => siblingData?.[statusName] === 'published',
-        description:
+        description: tr(
+          'Optional. Frontends can use this for ordering/feeds (otherwise use createdAt).',
           'اختیاری. در صورت تنظیم، فرانت‌اند می‌تواند برای مرتب‌سازی/فید از آن استفاده کند (در غیر این صورت از createdAt).',
+        ),
       },
     })
   }

@@ -1,22 +1,23 @@
 import type { CollectionConfig } from 'payload'
 
-import { slugField } from '../../../shared/fields'
 import { adminOrEditor, publicRead } from '../../../shared/access'
+import { slugField } from '../../../shared/fields'
+import { adminText, tr } from '../../../shared/i18n'
 import { generateSlugHook } from '../../../shared/hooks'
 
 /**
- * Generic categories (reusable for blog posts now, and later potentially products/taxonomy).
+ * Generic categories (reusable taxonomy).
  */
 export const Categories: CollectionConfig = {
   slug: 'categories',
   labels: {
-    singular: 'دسته‌بندی',
-    plural: 'دسته‌بندی‌ها',
+    singular: adminText.collections.categories.singular,
+    plural: adminText.collections.categories.plural,
   },
   admin: {
-    group: 'محتوا',
+    group: adminText.groups.content,
     useAsTitle: 'title',
-    description: 'طبقه‌بندی عمومی و قابل استفادهٔ مجدد.',
+    description: tr('Reusable taxonomy for organizing content.', 'طبقه‌بندی عمومی و قابل استفادهٔ مجدد.'),
   },
   access: {
     read: publicRead,
@@ -30,15 +31,16 @@ export const Categories: CollectionConfig = {
   fields: [
     {
       name: 'title',
-      label: 'عنوان',
+      label: adminText.fields.title,
       type: 'text',
       required: true,
     },
     slugField(),
     {
       name: 'description',
-      label: 'توضیحات',
+      label: adminText.fields.description,
       type: 'textarea',
     },
   ],
 }
+

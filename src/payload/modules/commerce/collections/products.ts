@@ -1,8 +1,9 @@
 import type { CollectionConfig } from 'payload'
 
 import { layoutBlocks } from '../../../shared/blocks'
-import { publishFields, seoFields, slugField } from '../../../shared/fields'
 import { adminOrEditor, publicRead } from '../../../shared/access'
+import { publishFields, seoFields, slugField } from '../../../shared/fields'
+import { adminText, tr } from '../../../shared/i18n'
 import { ensurePublishedAt, generateSlugHook } from '../../../shared/hooks'
 
 /**
@@ -15,13 +16,13 @@ import { ensurePublishedAt, generateSlugHook } from '../../../shared/hooks'
 export const Products: CollectionConfig = {
   slug: 'products',
   labels: {
-    singular: 'محصول',
-    plural: 'محصولات',
+    singular: adminText.collections.products.singular,
+    plural: adminText.collections.products.plural,
   },
   admin: {
-    group: 'فروشگاه',
+    group: adminText.groups.store,
     useAsTitle: 'title',
-    description: 'محصولات عمومی برای پروژه‌های فروشگاهی.',
+    description: tr('Generic products collection for ecommerce projects.', 'محصولات عمومی برای پروژه‌های فروشگاهی.'),
   },
   access: {
     read: publicRead,
@@ -36,124 +37,148 @@ export const Products: CollectionConfig = {
   fields: [
     {
       name: 'title',
-      label: 'عنوان',
+      label: adminText.fields.title,
       type: 'text',
       required: true,
     },
     slugField(),
     {
       name: 'sku',
-      label: 'کد کالا (SKU)',
+      label: tr('SKU', 'کد کالا (SKU)'),
       type: 'text',
       admin: {
-        description: 'اختیاری. شناسهٔ داخلی برای سیستم‌های فروش/انبارداری.',
+        description: tr(
+          'Optional internal identifier used by your commerce/inventory systems.',
+          'اختیاری. شناسهٔ داخلی برای سیستم‌های فروش/انبارداری.',
+        ),
       },
     },
     {
       name: 'shortDescription',
-      label: 'توضیح کوتاه',
+      label: tr('Short Description', 'توضیح کوتاه'),
       type: 'textarea',
       admin: {
-        description: 'اختیاری. برای کارت محصول، لیست‌ها و پیش‌نمایش‌ها.',
+        description: tr(
+          'Optional. Used for product cards, listings, and previews.',
+          'اختیاری. برای کارت محصول، لیست‌ها و پیش‌نمایش‌ها.',
+        ),
       },
     },
     {
       type: 'collapsible',
-      label: 'رسانه',
+      label: tr('Media', 'رسانه'),
       admin: {
         initCollapsed: false,
-        description: 'تصاویر محصول برای لیست‌ها و صفحهٔ جزئیات.',
+        description: tr(
+          'Product images used for listings and detail pages.',
+          'تصاویر محصول برای لیست‌ها و صفحهٔ جزئیات.',
+        ),
       },
       fields: [
         {
           name: 'featuredImage',
-          label: 'تصویر شاخص',
+          label: tr('Featured Image', 'تصویر شاخص'),
           type: 'relationship',
           relationTo: 'media',
           admin: {
-            description: 'اختیاری. تصویر اصلی برای لیست‌ها و پیش‌نمایش اجتماعی.',
+            description: tr(
+              'Optional. Primary image used for listings and social previews.',
+              'اختیاری. تصویر اصلی برای لیست‌ها و پیش‌نمایش اجتماعی.',
+            ),
           },
         },
         {
           name: 'gallery',
-          label: 'گالری',
+          label: tr('Gallery', 'گالری'),
           type: 'relationship',
           relationTo: 'media',
           hasMany: true,
           admin: {
-            description: 'اختیاری. تصاویر بیشتر برای محصول.',
+            description: tr('Optional. Additional product images.', 'اختیاری. تصاویر بیشتر برای محصول.'),
           },
         },
       ],
     },
     {
       type: 'collapsible',
-      label: 'قیمت‌گذاری',
+      label: tr('Pricing', 'قیمت‌گذاری'),
       admin: {
         initCollapsed: false,
-        description: 'فیلدهای قیمت (MVP). مدیریت واحد پول در سطح یکپارچه‌سازی/فرانت‌اند انجام می‌شود.',
+        description: tr(
+          'Pricing fields (MVP). Currency handling is done by the frontend/integration.',
+          'فیلدهای قیمت (MVP). مدیریت واحد پول در سطح یکپارچه‌سازی/فرانت‌اند انجام می‌شود.',
+        ),
       },
       fields: [
         {
           name: 'basePrice',
-          label: 'قیمت پایه',
+          label: tr('Base Price', 'قیمت پایه'),
           type: 'number',
           required: true,
           min: 0,
           admin: {
-            placeholder: '0',
+            placeholder: tr('0', '۰'),
           },
         },
         {
           name: 'salePrice',
-          label: 'قیمت فروش',
+          label: tr('Sale Price', 'قیمت فروش'),
           type: 'number',
           min: 0,
           validate: (
             value: number | null | undefined,
-            { data }: { data?: { basePrice?: unknown } },
+            { data, req }: { data?: { basePrice?: unknown }; req?: { i18n?: { language?: string } } },
           ) => {
             if (value === null || typeof value === 'undefined') return true
             const base = data?.basePrice
             if (typeof base === 'number' && value > base) {
-              return 'salePrice must be less than or equal to basePrice'
+              const lang = req?.i18n?.language
+              return lang === 'fa'
+                ? 'قیمت فروش باید کمتر یا مساوی قیمت پایه باشد'
+                : 'salePrice must be less than or equal to basePrice'
             }
             return true
           },
           admin: {
-            description: 'اختیاری. باید کمتر یا مساوی قیمت پایه باشد.',
-            placeholder: '0',
+            description: tr(
+              'Optional. Must be less than or equal to Base Price.',
+              'اختیاری. باید کمتر یا مساوی قیمت پایه باشد.',
+            ),
+            placeholder: tr('0', '۰'),
           },
         },
       ],
     },
     {
       name: 'productCategories',
-      label: 'دسته‌بندی‌های محصول',
+      label: adminText.collections.productCategories.plural,
       type: 'relationship',
       relationTo: 'product-categories',
       hasMany: true,
       admin: {
-        description: 'اختیاری. برای فیلتر کردن و ناوبری.',
+        description: tr('Optional. Useful for filtering and navigation.', 'اختیاری. برای فیلترکردن و ناوبری.'),
       },
     },
     {
       name: 'attributes',
-      label: 'ویژگی‌ها',
+      label: tr('Attributes', 'ویژگی‌ها'),
       type: 'array',
       admin: {
-        description: 'اختیاری. ویژگی‌های کلید/مقدار (مثلاً جنس: پنبه، سایز: بزرگ).',
+        description: tr(
+          'Optional. Key/value attributes (e.g. Material: Cotton, Size: Large).',
+          'اختیاری. ویژگی‌های کلید/مقدار (مثلاً جنس: پنبه، سایز: بزرگ).',
+        ),
       },
       fields: [
         {
           name: 'name',
-          label: 'نام',
+          label: tr('Name', 'نام'),
           type: 'text',
           required: true,
         },
         {
           name: 'value',
-          label: 'مقدار',
+          label: tr('Value', 'مقدار'),
           type: 'text',
           required: true,
         },
@@ -161,48 +186,53 @@ export const Products: CollectionConfig = {
     },
     {
       type: 'collapsible',
-      label: 'تنوع‌ها',
+      label: tr('Variants', 'تنوع‌ها'),
       admin: {
         initCollapsed: true,
-        description:
-          'تنوع‌ها (MVP). ساده نگه دارید؛ در صورت نیاز، مدل‌های پیشرفته‌تر بعداً اضافه می‌شوند.',
+        description: tr(
+          'Variants (MVP). Keep it simple; extend later as needed.',
+          'تنوع‌ها (MVP). ساده نگه دارید؛ در صورت نیاز بعداً توسعه دهید.',
+        ),
       },
       fields: [
         {
           name: 'variants',
-          label: 'تنوع‌ها',
+          label: tr('Variants', 'تنوع‌ها'),
           type: 'array',
           fields: [
             {
               name: 'sku',
-              label: 'کد کالا (SKU)',
+              label: tr('SKU', 'کد کالا (SKU)'),
               type: 'text',
               admin: {
-                description: 'اختیاری. کد کالا برای این تنوع.',
+                description: tr('Optional SKU for this variant.', 'اختیاری. کد کالا برای این تنوع.'),
               },
             },
             {
               name: 'price',
-              label: 'قیمت',
+              label: tr('Price', 'قیمت'),
               type: 'number',
               required: true,
               min: 0,
             },
             {
               name: 'stock',
-              label: 'موجودی',
+              label: tr('Stock', 'موجودی'),
               type: 'number',
               min: 0,
               admin: {
-                description: 'اختیاری. TODO: در آینده با ماژول موجودی/انبار جایگزین شود.',
+                description: tr(
+                  'Optional. TODO: replace with an inventory module later.',
+                  'اختیاری. TODO: در آینده با ماژول موجودی/انبار جایگزین شود.',
+                ),
               },
             },
             {
               name: 'attributesSummary',
-              label: 'خلاصه ویژگی‌ها',
+              label: tr('Attributes Summary', 'خلاصه ویژگی‌ها'),
               type: 'text',
               admin: {
-                description: 'اختیاری. مثال: «سایز: M / رنگ: مشکی».',
+                description: tr('Optional summary (e.g. “Size: M / Color: Black”).', 'اختیاری. مثال: «سایز: M / رنگ: مشکی».'),
               },
             },
           ],
@@ -211,21 +241,21 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'faq',
-      label: 'پرسش‌های متداول',
+      label: tr('FAQ', 'پرسش‌های متداول'),
       type: 'array',
       admin: {
-        description: 'اختیاری. پرسش‌های مربوط به همین محصول.',
+        description: tr('Optional. Product-specific questions and answers.', 'اختیاری. پرسش‌های مرتبط با همین محصول.'),
       },
       fields: [
         {
           name: 'question',
-          label: 'پرسش',
+          label: tr('Question', 'پرسش'),
           type: 'text',
           required: true,
         },
         {
           name: 'answer',
-          label: 'پاسخ',
+          label: tr('Answer', 'پاسخ'),
           type: 'textarea',
           required: true,
         },
@@ -233,11 +263,14 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'layout',
-      label: 'چیدمان',
+      label: adminText.fields.layout,
       type: 'blocks',
       blocks: layoutBlocks,
       admin: {
-        description: 'چیدمان صفحهٔ محصول با بلوک‌های قابل استفادهٔ مجدد ساخته می‌شود.',
+        description: tr(
+          'Build the product page layout using reusable blocks.',
+          'چیدمان صفحهٔ محصول را با بلوک‌های قابل استفادهٔ مجدد بسازید.',
+        ),
       },
     },
     seoFields(),

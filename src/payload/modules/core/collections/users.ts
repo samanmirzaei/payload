@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { adminOnly, adminOrSelf, allowFirstUserOr } from '../../../shared/access'
+import { adminText, tr } from '../../../shared/i18n'
 
 /**
  * Minimal Users collection required for Payload Admin authentication.
@@ -9,14 +10,14 @@ import { adminOnly, adminOrSelf, allowFirstUserOr } from '../../../shared/access
 export const Users: CollectionConfig = {
   slug: 'users',
   labels: {
-    singular: 'کاربر',
-    plural: 'کاربران',
+    singular: adminText.collections.users.singular,
+    plural: adminText.collections.users.plural,
   },
   auth: true,
   admin: {
-    group: 'کاربران',
+    group: adminText.groups.users,
     useAsTitle: 'email',
-    description: 'کاربران پنل مدیریت و نقش‌های دسترسی.',
+    description: tr('Admin users and roles.', 'کاربران پنل مدیریت و نقش‌های دسترسی.'),
   },
   access: {
     read: adminOrSelf,
@@ -27,24 +28,27 @@ export const Users: CollectionConfig = {
   fields: [
     {
       name: 'name',
-      label: 'نام',
+      label: tr('Name', 'نام'),
       type: 'text',
     },
     {
       name: 'role',
-      label: 'نقش',
+      label: tr('Role', 'نقش'),
       type: 'select',
       required: true,
       defaultValue: 'admin',
       saveToJWT: true,
       options: [
-        { label: 'مدیر', value: 'admin' },
-        { label: 'ویرایشگر', value: 'editor' },
+        { label: tr('Admin', 'مدیر'), value: 'admin' },
+        { label: tr('Editor', 'ویرایشگر'), value: 'editor' },
       ],
       admin: {
-        description:
+        description: tr(
+          'Roles (MVP). TODO: add more roles and stricter policies per project.',
           'نقش‌ها (MVP). TODO: در هر پروژه نقش‌های بیشتر و سیاست‌های دقیق‌تر اضافه شود.',
+        ),
       },
     },
   ],
 }
+

@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { adminText, tr } from '../../i18n'
+
 /**
  * MVP rich text block.
  *
@@ -9,17 +11,18 @@ import type { Block } from 'payload'
 export const RichTextBlock: Block = {
   slug: 'richText',
   labels: {
-    singular: 'متن',
-    plural: 'بلوک‌های متن',
+    singular: adminText.blocks.richText.singular,
+    plural: adminText.blocks.richText.plural,
   },
   fields: [
     {
       name: 'content',
-      label: 'محتوا',
+      label: tr('Content', 'محتوا'),
       type: 'textarea',
       admin: {
-        description: 'موقت. TODO: در آینده با فیلد ویرایشگر متن غنی (Rich Text) جایگزین شود.',
+        description: tr('Temporary. TODO: replace with a rich text editor field.', 'موقت. TODO: در آینده با فیلد Rich Text جایگزین شود.'),
       },
     },
   ],
 }
+

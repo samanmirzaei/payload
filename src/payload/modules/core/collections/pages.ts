@@ -1,8 +1,9 @@
 import type { CollectionConfig } from 'payload'
 
-import { publishFields, seoFields, slugField } from '../../../shared/fields'
 import { layoutBlocks } from '../../../shared/blocks'
 import { adminOrEditor, publicRead } from '../../../shared/access'
+import { publishFields, seoFields, slugField } from '../../../shared/fields'
+import { adminText, tr } from '../../../shared/i18n'
 import { ensurePublishedAt, generateSlugHook } from '../../../shared/hooks'
 
 /**
@@ -13,13 +14,16 @@ import { ensurePublishedAt, generateSlugHook } from '../../../shared/hooks'
 export const Pages: CollectionConfig = {
   slug: 'pages',
   labels: {
-    singular: 'صفحه',
-    plural: 'صفحه‌ها',
+    singular: adminText.collections.pages.singular,
+    plural: adminText.collections.pages.plural,
   },
   admin: {
-    group: 'محتوا',
+    group: adminText.groups.content,
     useAsTitle: 'title',
-    description: 'صفحه‌های قابل استفادهٔ مجدد برای وب‌سایت‌های شرکتی، مارکتینگ و محتوا.',
+    description: tr(
+      'Reusable pages for corporate, marketing, and content websites.',
+      'صفحه‌های قابل استفادهٔ مجدد برای وب‌سایت‌های شرکتی، مارکتینگ و محتوا.',
+    ),
   },
   access: {
     read: publicRead,
@@ -34,21 +38,25 @@ export const Pages: CollectionConfig = {
   fields: [
     {
       name: 'title',
-      label: 'عنوان',
+      label: adminText.fields.title,
       type: 'text',
       required: true,
     },
     slugField(),
     {
       name: 'layout',
-      label: 'چیدمان',
+      label: adminText.fields.layout,
       type: 'blocks',
       blocks: layoutBlocks,
       admin: {
-        description: 'چیدمان صفحه با بلوک‌های قابل استفادهٔ مجدد ساخته می‌شود.',
+        description: tr(
+          'Build the page layout using reusable blocks.',
+          'چیدمان صفحه را با بلوک‌های قابل استفادهٔ مجدد بسازید.',
+        ),
       },
     },
     seoFields(),
     ...publishFields(),
   ],
 }
+

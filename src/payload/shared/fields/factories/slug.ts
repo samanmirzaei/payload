@@ -1,11 +1,13 @@
 import type { Field } from 'payload'
 
+import { adminText, tr } from '../../i18n'
+
 export type SlugFieldOptions = {
   name?: string
-  label?: string
+  label?: string | Record<string, string>
   required?: boolean
   unique?: boolean
-  adminDescription?: string
+  adminDescription?: string | Record<string, string>
 }
 
 /**
@@ -16,10 +18,13 @@ export type SlugFieldOptions = {
 export const slugField = (options: SlugFieldOptions = {}): Field => {
   const {
     name = 'slug',
-    label = 'نامک (Slug)',
+    label = adminText.fields.slug,
     required = true,
     unique = true,
-    adminDescription = 'شناسهٔ مناسب برای URL. (TODO: تولید خودکار از روی عنوان با hook)',
+    adminDescription = tr(
+      'URL-safe identifier. (TODO: auto-generate from title via hook)',
+      'شناسهٔ مناسب برای URL. (TODO: تولید خودکار از روی عنوان با hook)',
+    ),
   } = options
 
   return {

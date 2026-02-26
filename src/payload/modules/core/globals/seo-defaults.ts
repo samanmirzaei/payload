@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { adminOrEditor, publicRead } from '../../../shared/access'
+import { adminText, tr } from '../../../shared/i18n'
 
 /**
  * Site-wide SEO defaults.
@@ -9,10 +10,13 @@ import { adminOrEditor, publicRead } from '../../../shared/access'
  */
 export const SeoDefaults: GlobalConfig = {
   slug: 'seo-defaults',
-  label: 'پیش‌فرض‌های سئو',
+  label: adminText.globals.seoDefaults,
   admin: {
-    group: 'تنظیمات',
-    description: 'مقادیر پیش‌فرض سئو که وقتی سئوی صفحه خالی است، توسط فرانت‌اندها اعمال می‌شود.',
+    group: adminText.groups.settings,
+    description: tr(
+      'Fallback SEO values applied by frontends when page-level SEO fields are empty.',
+      'مقادیر پیش‌فرض سئو که وقتی سئوی صفحه خالی است، توسط فرانت‌اندها اعمال می‌شود.',
+    ),
   },
   access: {
     read: publicRead,
@@ -21,26 +25,36 @@ export const SeoDefaults: GlobalConfig = {
   fields: [
     {
       name: 'defaultTitle',
-      label: 'عنوان پیش‌فرض',
+      label: tr('Default Title', 'عنوان پیش‌فرض'),
       type: 'text',
       admin: {
-        description: 'وقتی یک صفحه عنوان متا ندارد استفاده می‌شود.',
+        description: tr(
+          'Used when a page does not provide a meta title.',
+          'وقتی یک صفحه عنوان متا ندارد استفاده می‌شود.',
+        ),
       },
     },
     {
       name: 'titleTemplate',
-      label: 'قالب عنوان',
+      label: tr('Title Template', 'قالب عنوان'),
       type: 'text',
       admin: {
-        description: 'مثال: %s | Brand (جایی که %s با عنوان صفحه جایگزین می‌شود).',
+        description: tr(
+          'Example: %s | Brand (where %s is replaced with the page title).',
+          'مثال: %s | Brand (جایی که %s با عنوان صفحه جایگزین می‌شود).',
+        ),
+        placeholder: tr('%s | Brand', '%s | Brand'),
       },
     },
     {
       name: 'defaultMetaDescription',
-      label: 'توضیح متای پیش‌فرض',
+      label: tr('Default Meta Description', 'توضیح متای پیش‌فرض'),
       type: 'textarea',
       admin: {
-        description: 'وقتی یک صفحه توضیح متا ندارد استفاده می‌شود.',
+        description: tr(
+          'Used when a page does not provide a meta description.',
+          'وقتی یک صفحه توضیح متا ندارد استفاده می‌شود.',
+        ),
       },
     },
     /**
@@ -49,51 +63,66 @@ export const SeoDefaults: GlobalConfig = {
      */
     {
       name: 'defaultOgImageUrl',
-      label: 'نشانی تصویر پیش‌فرض OG',
+      label: tr('Default OG Image URL', 'نشانی تصویر پیش‌فرض OG'),
       type: 'text',
       admin: {
-        description: 'موقت: URL به‌صورت متن. TODO: در آینده با رابطه به Media جایگزین شود.',
+        description: tr(
+          'Temporary: URL string. TODO: replace with Media relationship later.',
+          'موقت: URL به‌صورت متن. TODO: در آینده با رابطه به Media جایگزین شود.',
+        ),
       },
     },
     {
       name: 'robots',
-      label: 'پیش‌فرض‌های Robots',
+      label: tr('Robots Defaults', 'پیش‌فرض‌های Robots'),
       type: 'group',
       fields: [
         {
           name: 'noIndex',
-          label: 'noindex پیش‌فرض',
+          label: tr('Default noindex', 'noindex پیش‌فرض'),
           type: 'checkbox',
           defaultValue: false,
           admin: {
-            description: 'اگر فعال باشد، پیش‌فرض فرانت‌اندها noindex است مگر اینکه در صفحه بازنویسی شود.',
+            description: tr(
+              'If enabled, frontends should default to noindex unless overridden per-page.',
+              'اگر فعال باشد، پیش‌فرض فرانت‌اندها noindex است مگر اینکه در صفحه بازنویسی شود.',
+            ),
           },
         },
         {
           name: 'noFollow',
-          label: 'nofollow پیش‌فرض',
+          label: tr('Default nofollow', 'nofollow پیش‌فرض'),
           type: 'checkbox',
           defaultValue: false,
           admin: {
-            description: 'اگر فعال باشد، پیش‌فرض فرانت‌اندها nofollow است مگر اینکه در صفحه بازنویسی شود.',
+            description: tr(
+              'If enabled, frontends should default to nofollow unless overridden per-page.',
+              'اگر فعال باشد، پیش‌فرض فرانت‌اندها nofollow است مگر اینکه در صفحه بازنویسی شود.',
+            ),
           },
         },
       ],
     },
     {
       name: 'organization',
-      label: 'طرح‌واره سازمان (Schema.org)',
+      label: tr('Organization Schema', 'طرح‌واره سازمان (Schema.org)'),
       type: 'group',
       admin: {
-        description: 'فیلدهای پایه برای داده‌های ساختاریافته (Organization) که در فرانت‌اند استفاده می‌شود.',
+        description: tr(
+          'Basic Organization schema fields used by frontends for structured data.',
+          'فیلدهای پایه برای داده‌های ساختاریافته (Organization) که در فرانت‌اند استفاده می‌شود.',
+        ),
       },
       fields: [
         {
           name: 'name',
-          label: 'نام سازمان',
+          label: tr('Organization Name', 'نام سازمان'),
           type: 'text',
           admin: {
-            description: 'اغلب با «تنظیمات سایت → نام سایت» یکسان است.',
+            description: tr(
+              'Often matches Site Settings → Site Name.',
+              'اغلب با «تنظیمات سایت → نام سایت» یکسان است.',
+            ),
           },
         },
         /**
@@ -101,27 +130,34 @@ export const SeoDefaults: GlobalConfig = {
          */
         {
           name: 'logoUrl',
-          label: 'نشانی لوگو (URL)',
+          label: tr('Logo URL', 'نشانی لوگو (URL)'),
           type: 'text',
           admin: {
-            description: 'موقت: URL به‌صورت متن. TODO: در آینده با رابطه به Media جایگزین شود.',
+            description: tr(
+              'Temporary: URL string. TODO: replace with Media relationship later.',
+              'موقت: URL به‌صورت متن. TODO: در آینده با رابطه به Media جایگزین شود.',
+            ),
           },
         },
         {
           name: 'sameAsLinks',
-          label: 'لینک‌های SameAs',
+          label: tr('Same As Links', 'لینک‌های SameAs'),
           type: 'array',
           admin: {
-            description: 'URL پروفایل‌های اجتماعی (برای Organization.sameAs در schema.org).',
+            description: tr(
+              'URLs for social profiles (used by schema.org Organization.sameAs).',
+              'URL پروفایل‌های اجتماعی (برای Organization.sameAs در schema.org).',
+            ),
           },
           fields: [
             {
               name: 'url',
-              label: 'نشانی (URL)',
+              label: tr('URL', 'نشانی (URL)'),
               type: 'text',
               required: true,
               admin: {
-                description: 'بهتر است URL کامل (Absolute) وارد شود.',
+                description: tr('Absolute URL recommended.', 'بهتر است URL کامل (Absolute) وارد شود.'),
+                placeholder: tr('https://...', 'https://...'),
               },
             },
           ],
@@ -130,3 +166,4 @@ export const SeoDefaults: GlobalConfig = {
     },
   ],
 }
+

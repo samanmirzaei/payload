@@ -1,8 +1,9 @@
-import type { CollectionConfig } from 'payload'
-
 import path from 'node:path'
 
+import type { CollectionConfig } from 'payload'
+
 import { adminOrEditor, publicRead } from '../../../shared/access'
+import { adminText, tr } from '../../../shared/i18n'
 
 /**
  * Media upload collection (images/files).
@@ -13,13 +14,16 @@ import { adminOrEditor, publicRead } from '../../../shared/access'
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: {
-    singular: 'رسانه',
-    plural: 'رسانه‌ها',
+    singular: adminText.collections.media.singular,
+    plural: adminText.collections.media.plural,
   },
   admin: {
-    group: 'رسانه‌ها',
+    group: adminText.groups.media,
     useAsTitle: 'alt',
-    description: 'فایل‌ها و تصاویر بارگذاری‌شده که در بخش‌های مختلف محتوا استفاده می‌شوند.',
+    description: tr(
+      'Uploaded files and images used across content.',
+      'فایل‌ها و تصاویر بارگذاری‌شده که در بخش‌های مختلف محتوا استفاده می‌شوند.',
+    ),
   },
   access: {
     read: publicRead,
@@ -33,36 +37,49 @@ export const Media: CollectionConfig = {
   fields: [
     {
       name: 'alt',
-      label: 'متن جایگزین (Alt)',
+      label: tr('Alt Text', 'متن جایگزین (Alt)'),
       type: 'text',
       required: true,
       admin: {
-        description: 'برای دسترس‌پذیری و سئو ضروری است. محتوای تصویر را توصیف کنید.',
+        description: tr(
+          'Required for accessibility and SEO. Describe what the image shows.',
+          'برای دسترس‌پذیری و سئو ضروری است. محتوای تصویر را توصیف کنید.',
+        ),
       },
     },
     {
       name: 'caption',
-      label: 'زیرنویس',
+      label: tr('Caption', 'زیرنویس'),
       type: 'textarea',
       admin: {
-        description: 'اختیاری. در برخی چیدمان‌ها کنار تصویر نمایش داده می‌شود.',
+        description: tr(
+          'Optional. Can be displayed alongside the media in some layouts.',
+          'اختیاری. در برخی چیدمان‌ها کنار تصویر نمایش داده می‌شود.',
+        ),
       },
     },
     {
       name: 'source',
-      label: 'منبع',
+      label: tr('Source', 'منبع'),
       type: 'text',
       admin: {
-        description: 'اختیاری. منبع تهیهٔ این فایل (وب‌سایت، نشریه و ...).',
+        description: tr(
+          'Optional. Where this asset came from (website, publication, etc.).',
+          'اختیاری. منبع تهیهٔ این فایل (وب‌سایت، نشریه و ...).',
+        ),
       },
     },
     {
       name: 'credit',
-      label: 'اعتبار/کِرِدیت',
+      label: tr('Credit', 'اعتبار/کِرِدیت'),
       type: 'text',
       admin: {
-        description: 'اختیاری. نام عکاس/سازنده برای نیازهای حقوقی یا تحریریه.',
+        description: tr(
+          'Optional. Photographer/creator name for legal/editorial needs.',
+          'اختیاری. نام عکاس/سازنده برای نیازهای حقوقی یا تحریریه.',
+        ),
       },
     },
   ],
 }
+

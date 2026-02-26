@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { adminText, tr } from '../../i18n'
+
 /**
  * MVP hero block.
  *
@@ -9,75 +11,85 @@ import type { Block } from 'payload'
 export const HeroBlock: Block = {
   slug: 'hero',
   labels: {
-    singular: 'بنر اصلی',
-    plural: 'بنرهای اصلی',
+    singular: adminText.blocks.hero.singular,
+    plural: adminText.blocks.hero.plural,
   },
   fields: [
     {
       name: 'headline',
-      label: 'تیتر',
+      label: tr('Headline', 'تیتر'),
       type: 'text',
       required: true,
     },
     {
       name: 'subheadline',
-      label: 'زیرتیتر',
+      label: tr('Subheadline', 'زیرتیتر'),
       type: 'textarea',
     },
     {
       name: 'primaryButton',
-      label: 'دکمه اصلی',
+      label: tr('Primary Button', 'دکمه اصلی'),
       type: 'group',
       admin: {
-        description: 'اختیاری. اگر پر شود، فرانت‌اند باید یک دکمه CTA اصلی نمایش دهد.',
+        description: tr(
+          'Optional. If provided, frontends should render a primary CTA button.',
+          'اختیاری. اگر پر شود، فرانت‌اند باید یک دکمه CTA اصلی نمایش دهد.',
+        ),
       },
       fields: [
         {
           name: 'label',
-          label: 'متن دکمه',
+          label: tr('Label', 'متن دکمه'),
           type: 'text',
         },
         {
           name: 'href',
-          label: 'لینک (Href)',
+          label: tr('Href', 'لینک (Href)'),
           type: 'text',
           admin: {
-            description: 'می‌تواند نسبی باشد (مثل /contact) یا URL کامل.',
+            description: tr('Relative (e.g. /contact) or absolute URL.', 'می‌تواند نسبی باشد (مثل /contact) یا URL کامل.'),
           },
         },
       ],
     },
     {
       name: 'secondaryButton',
-      label: 'دکمه دوم',
+      label: tr('Secondary Button', 'دکمه دوم'),
       type: 'group',
       admin: {
-        description: 'اختیاری. اگر پر شود، فرانت‌اند باید یک دکمه CTA ثانویه نمایش دهد.',
+        description: tr(
+          'Optional. If provided, frontends should render a secondary CTA button.',
+          'اختیاری. اگر پر شود، فرانت‌اند باید یک دکمه CTA ثانویه نمایش دهد.',
+        ),
       },
       fields: [
         {
           name: 'label',
-          label: 'متن دکمه',
+          label: tr('Label', 'متن دکمه'),
           type: 'text',
         },
         {
           name: 'href',
-          label: 'لینک (Href)',
+          label: tr('Href', 'لینک (Href)'),
           type: 'text',
           admin: {
-            description: 'می‌تواند نسبی باشد (مثل /learn-more) یا URL کامل.',
+            description: tr(
+              'Relative (e.g. /learn-more) or absolute URL.',
+              'می‌تواند نسبی باشد (مثل /learn-more) یا URL کامل.',
+            ),
           },
         },
       ],
     },
     {
       name: 'backgroundImage',
-      label: 'تصویر پس‌زمینه',
+      label: tr('Background Image', 'تصویر پس‌زمینه'),
       type: 'relationship',
       relationTo: 'media',
       admin: {
-        description: 'اختیاری. تصویر پس‌زمینه/کاور برای این بنر.',
+        description: tr('Optional. Background/cover image for the hero.', 'اختیاری. تصویر پس‌زمینه/کاور برای این بنر.'),
       },
     },
   ],
 }
+
