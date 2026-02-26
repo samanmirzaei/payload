@@ -24,6 +24,15 @@ export const Pages: CollectionConfig = {
       'Reusable pages for corporate, marketing, and content websites.',
       'صفحه‌های قابل استفادهٔ مجدد برای وب‌سایت‌های شرکتی، مارکتینگ و محتوا.',
     ),
+    components: {
+      views: {
+        edit: {
+          default: {
+            actions: ['./src/payload/admin/components/DocURLActions'],
+          },
+        },
+      },
+    },
   },
   access: {
     read: publicRead,
@@ -59,4 +68,3 @@ export const Pages: CollectionConfig = {
     ...publishFields(),
   ],
 }
-

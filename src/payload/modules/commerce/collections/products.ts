@@ -23,6 +23,15 @@ export const Products: CollectionConfig = {
     group: adminText.groups.store,
     useAsTitle: 'title',
     description: tr('Generic products collection for ecommerce projects.', 'محصولات عمومی برای پروژه‌های فروشگاهی.'),
+    components: {
+      views: {
+        edit: {
+          default: {
+            actions: ['./src/payload/admin/components/DocURLActions'],
+          },
+        },
+      },
+    },
   },
   access: {
     read: publicRead,

@@ -24,6 +24,15 @@ export const Posts: CollectionConfig = {
       'Reusable posts for blogs, news, and editorial content.',
       'نوشته‌های قابل استفادهٔ مجدد برای وبلاگ، خبر و محتوای تحریریه.',
     ),
+    components: {
+      views: {
+        edit: {
+          default: {
+            actions: ['./src/payload/admin/components/DocURLActions'],
+          },
+        },
+      },
+    },
   },
   access: {
     read: publicRead,
@@ -92,4 +101,3 @@ export const Posts: CollectionConfig = {
     ...publishFields(),
   ],
 }
-
