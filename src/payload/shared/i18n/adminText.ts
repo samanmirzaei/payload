@@ -38,6 +38,10 @@ export const adminText = {
       singular: tr('Product Category', 'دسته‌بندی محصول'),
       plural: tr('Product Categories', 'دسته‌بندی‌های محصول'),
     },
+    orders: {
+      singular: tr('Order', 'سفارش'),
+      plural: tr('Orders', 'سفارش‌ها'),
+    },
   },
 
   globals: {
@@ -81,4 +85,3 @@ export const adminText = {
     },
   },
 } as const
-

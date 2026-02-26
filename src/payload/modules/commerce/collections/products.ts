@@ -229,6 +229,17 @@ export const Products: CollectionConfig = {
               label: tr('Stock', 'موجودی'),
               type: 'number',
               min: 0,
+              validate: (
+                value: number | null | undefined,
+                { req }: { req?: { i18n?: { language?: string } } },
+              ) => {
+                if (value === null || typeof value === 'undefined') return true
+                if (typeof value === 'number' && value < 0) {
+                  const lang = req?.i18n?.language
+                  return lang === 'fa' ? 'موجودی نمی‌تواند منفی باشد' : 'stock cannot be negative'
+                }
+                return true
+              },
               admin: {
                 description: tr(
                   'Optional. TODO: replace with an inventory module later.',
