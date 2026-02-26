@@ -25,9 +25,10 @@ const generateOrderNumber = (): string => {
 
 const normalizeOrderData = async (args: {
   data: any
+  originalDoc?: any
   req: any
 }): Promise<any> => {
-  const { data, req } = args
+  const { data, originalDoc, req } = args
   if (!data) return data
 
   if (!data.orderNumber) {
@@ -35,6 +36,12 @@ const normalizeOrderData = async (args: {
   }
 
   const items: any[] = Array.isArray(data.items) ? data.items : []
+
+  // Denormalized customer fields for easier filtering/searching in admin.
+  if (data.customer && typeof data.customer === 'object') {
+    if (typeof data.customer.phone === 'string') data.customerPhone = data.customer.phone
+    if (typeof data.customer.email === 'string') data.customerEmail = data.customer.email
+  }
 
   // Fill item snapshots (title/unitPrice) when missing.
   for (const item of items) {
@@ -193,6 +200,24 @@ const decrementStockOnPaid = async (args: {
   // TODO: consider "restock on cancel/refund" in the future.
 }
 
+const appendStatusHistory = (args: { data: any; originalDoc?: any; req: any }): void => {
+  const { data, originalDoc, req } = args
+  const nextStatus: OrderStatus | undefined = data?.status
+  const prevStatus: OrderStatus | undefined = originalDoc?.status
+
+  if (!nextStatus || !prevStatus || nextStatus === prevStatus) return
+
+  const existing = Array.isArray(originalDoc?.statusHistory) ? originalDoc.statusHistory : []
+  const entry = {
+    from: prevStatus,
+    to: nextStatus,
+    at: new Date().toISOString(),
+    by: req?.user?.id ?? undefined,
+  }
+
+  data.statusHistory = [...existing, entry]
+}
+
 /**
  * Orders (MVP).
  *
@@ -206,11 +231,21 @@ export const Orders: CollectionConfig = {
     singular: adminText.collections.orders.singular,
     plural: adminText.collections.orders.plural,
   },
+  defaultSort: '-createdAt',
   admin: {
     group: adminText.groups.store,
     useAsTitle: 'orderNumber',
-    defaultColumns: ['orderNumber', 'status', 'pricing.total', 'createdAt'],
+    defaultColumns: ['orderNumber', 'status', 'pricing.total', 'customer.phone', 'createdAt'],
     description: tr('Orders for ecommerce projects (MVP).', 'سفارش‌ها برای پروژه‌های فروشگاهی (MVP).'),
+    components: {
+      views: {
+        edit: {
+          default: {
+            actions: ['./src/payload/admin/components/OrderStatusActions'],
+          },
+        },
+      },
+    },
   },
   access: {
     read: adminOrEditor,
@@ -221,14 +256,15 @@ export const Orders: CollectionConfig = {
   hooks: {
     beforeValidate: [
       async (args) => {
-        args.data = await normalizeOrderData({ data: args.data, req: args.req })
+        args.data = await normalizeOrderData({ data: args.data, originalDoc: (args as any).originalDoc, req: args.req })
         return args.data
       },
     ],
     beforeChange: [
       async (args) => {
-        args.data = await normalizeOrderData({ data: args.data, req: args.req })
+        args.data = await normalizeOrderData({ data: args.data, originalDoc: (args as any).originalDoc, req: args.req })
         await decrementStockOnPaid({ data: args.data, originalDoc: (args as any).originalDoc, req: args.req })
+        appendStatusHistory({ data: args.data, originalDoc: (args as any).originalDoc, req: args.req })
         return args.data
       },
     ],
@@ -258,6 +294,28 @@ export const Orders: CollectionConfig = {
         { label: tr('Cancelled', 'لغو شده'), value: 'cancelled' },
         { label: tr('Fulfilled', 'ارسال/تحویل‌شده'), value: 'fulfilled' },
       ],
+    },
+    {
+      name: 'customerPhone',
+      label: tr('Customer Phone (index)', 'تلفن مشتری (فیلتر)'),
+      type: 'text',
+      index: true,
+      admin: {
+        readOnly: true,
+        disableListColumn: true,
+        description: tr('Auto-filled from Customer → Phone. Useful for filtering.', 'به‌صورت خودکار از «مشتری → تلفن» پر می‌شود. برای فیلتر مفید است.'),
+      },
+    },
+    {
+      name: 'customerEmail',
+      label: tr('Customer Email (index)', 'ایمیل مشتری (فیلتر)'),
+      type: 'email',
+      index: true,
+      admin: {
+        readOnly: true,
+        disableListColumn: true,
+        description: tr('Auto-filled from Customer → Email. Useful for filtering.', 'به‌صورت خودکار از «مشتری → ایمیل» پر می‌شود. برای فیلتر مفید است.'),
+      },
     },
     {
       name: 'customer',
@@ -374,6 +432,50 @@ export const Orders: CollectionConfig = {
           admin: {
             readOnly: true,
           },
+        },
+      ],
+    },
+    {
+      name: 'statusHistory',
+      label: tr('Status History', 'تاریخچه وضعیت'),
+      type: 'array',
+      admin: {
+        readOnly: true,
+        description: tr('Recorded automatically when status changes.', 'به‌صورت خودکار هنگام تغییر وضعیت ثبت می‌شود.'),
+      },
+      fields: [
+        {
+          name: 'from',
+          label: tr('From', 'از'),
+          type: 'select',
+          options: [
+            { label: tr('Pending', 'در انتظار پرداخت'), value: 'pending' },
+            { label: tr('Paid', 'پرداخت‌شده'), value: 'paid' },
+            { label: tr('Cancelled', 'لغو شده'), value: 'cancelled' },
+            { label: tr('Fulfilled', 'انجام‌شده'), value: 'fulfilled' },
+          ],
+        },
+        {
+          name: 'to',
+          label: tr('To', 'به'),
+          type: 'select',
+          options: [
+            { label: tr('Pending', 'در انتظار پرداخت'), value: 'pending' },
+            { label: tr('Paid', 'پرداخت‌شده'), value: 'paid' },
+            { label: tr('Cancelled', 'لغو شده'), value: 'cancelled' },
+            { label: tr('Fulfilled', 'انجام‌شده'), value: 'fulfilled' },
+          ],
+        },
+        {
+          name: 'at',
+          label: tr('At', 'زمان'),
+          type: 'date',
+        },
+        {
+          name: 'by',
+          label: tr('By', 'توسط'),
+          type: 'relationship',
+          relationTo: 'users',
         },
       ],
     },
