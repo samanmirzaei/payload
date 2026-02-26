@@ -6,4 +6,5 @@ import { Categories } from './categories'
 import { Pages } from './pages'
 import { Posts } from './posts'
 
-export const collections: CollectionConfig[] = [Users, Media, Categories, Pages, Posts]
+// Ordering here influences sidebar ordering within admin groups.
+export const collections: CollectionConfig[] = [Pages, Posts, Categories, Media, Users]
