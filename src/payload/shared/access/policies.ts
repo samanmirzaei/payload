@@ -7,7 +7,39 @@ const getUser = (args: Parameters<Access>[0]): UserWithRole | undefined => {
   return (args.req.user as UserWithRole | undefined) ?? undefined
 }
 
-export const publicRead: Access = () => true
+type PublicReadMode = 'all' | 'published'
+
+const getPublicReadMode = (): PublicReadMode => {
+  const env = process.env.PUBLIC_READ_MODE
+  if (env === 'all' || env === 'published') return env
+
+  // Default: permissive in dev, safe in production.
+  return process.env.NODE_ENV === 'production' ? 'published' : 'all'
+}
+
+const collectionsWithStatus: ReadonlySet<string> = new Set(['pages', 'posts', 'products'])
+
+export const publicRead: Access = (args) => {
+  // Authenticated users can read everything (admin UI + integrations).
+  const user = getUser(args)
+  if (user) return true
+
+  // Globals don't support "where" access filters; keep them readable (MVP).
+  if ((args as any)?.global) return true
+
+  const mode = getPublicReadMode()
+  if (mode === 'all') return true
+
+  const collectionSlug = (args as any)?.collection?.slug as string | undefined
+  if (!collectionSlug || !collectionsWithStatus.has(collectionSlug)) return true
+
+  // Public reads are restricted to published content only.
+  return {
+    status: {
+      equals: 'published',
+    },
+  }
+}
 
 export const authenticated: Access = (args) => Boolean(getUser(args))
 
