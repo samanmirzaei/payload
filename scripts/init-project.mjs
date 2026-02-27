@@ -39,11 +39,13 @@ async function main() {
 
   const existingProjectConfig = await readFile(projectConfigPath, 'utf8')
 
+  const presetAnswer = (await rl.question('Preset (corporate/shop) [corporate]: ')).trim().toLowerCase()
+  const preset = presetAnswer === 'shop' ? 'shop' : 'corporate'
+
   const projectName = (await rl.question('Project name (e.g. "My Site"): ')).trim() || 'Payload Project'
   const publicServerURL =
     (await rl.question('Public server URL (e.g. http://localhost:3000): ')).trim() || 'http://localhost:3000'
-  const enableCommerceAnswer = (await rl.question('Enable commerce module? (y/N): ')).trim().toLowerCase()
-  const enableCommerce = enableCommerceAnswer === 'y' || enableCommerceAnswer === 'yes'
+  const enableCommerce = preset === 'shop'
 
   rl.close()
 
@@ -64,6 +66,8 @@ async function main() {
 
   let nextEnv = envBase
   nextEnv = replaceEnvLine(nextEnv, 'PAYLOAD_PUBLIC_SERVER_URL', publicServerURL)
+  nextEnv = replaceEnvLine(nextEnv, 'PROJECT_PRESET', preset)
+  nextEnv = replaceEnvLine(nextEnv, 'PAYLOAD_SEED_COMMERCE', enableCommerce ? 'true' : 'false')
 
   // If PAYLOAD_SECRET is still a placeholder, replace it.
   const secretPlaceholder = /^PAYLOAD_SECRET=(change-me)?$/m
@@ -94,4 +98,3 @@ main().catch((err) => {
   console.error(err)
   process.exitCode = 1
 })
-

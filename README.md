@@ -18,6 +18,14 @@ This repo is designed for **one independent deployment per repo** (not multi-ten
 3) Initialize project settings + `.env`:
 - `npm run init:project`
 
+### Presets (corporate vs shop)
+
+`npm run init:project` asks for a preset:
+- `corporate`: disables commerce + orders, sets `PAYLOAD_SEED_COMMERCE=false`
+- `shop`: enables commerce + orders, sets `PAYLOAD_SEED_COMMERCE=true` and `PROJECT_PRESET=shop`
+
+You can always fine-tune toggles later in `src/project/project.config.ts`.
+
 4) Start locally (Docker Compose + Postgres):
 - `docker compose up -d --build`
 

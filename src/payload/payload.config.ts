@@ -53,8 +53,15 @@ export default buildConfig({
     const shouldSeed = process.env.NODE_ENV === 'development' && process.env.PAYLOAD_RUN_SEED === 'true'
     if (!shouldSeed) return
 
-    const includeCommerce = process.env.PAYLOAD_SEED_COMMERCE !== 'false'
-    await seedDev(payload, { includeCommerce })
+    const preset = process.env.PROJECT_PRESET === 'shop' ? 'shop' : 'corporate'
+    const includeCommerce =
+      process.env.PAYLOAD_SEED_COMMERCE === 'true'
+        ? true
+        : process.env.PAYLOAD_SEED_COMMERCE === 'false'
+          ? false
+          : enabledCommerce
+
+    await seedDev(payload, { includeCommerce, preset })
   },
 
   admin: {
