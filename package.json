@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "init:project": "node scripts/init-project.mjs",
     "dev": "next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
     "start": "next start -H 0.0.0.0 -p 3000"

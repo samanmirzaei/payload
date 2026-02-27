@@ -11,6 +11,7 @@ import { createModuleRegistry } from './modules/registry'
 import { coreModules } from './modules/core'
 import { commerceModules } from './modules/commerce'
 import { seedDev } from './seed'
+import { projectConfig } from '../project/project.config'
 
 /**
  * Integration points:
@@ -30,7 +31,9 @@ const secret =
 const resolvedSecret = secret ?? 'missing-payload-secret'
 const databaseUrl = process.env.DATABASE_URL ?? 'postgres://payload:payload@localhost:5432/payload'
 
-const registry = createModuleRegistry([...coreModules, ...commerceModules])
+const enabledCommerce = projectConfig.enableCommerce === true
+
+const registry = createModuleRegistry([...coreModules, ...(enabledCommerce ? commerceModules : [])])
 
 export default buildConfig({
   secret: resolvedSecret,
@@ -56,6 +59,9 @@ export default buildConfig({
 
   admin: {
     user: 'users',
+    meta: {
+      titleSuffix: projectConfig.adminBranding.titleSuffix || projectConfig.projectName,
+    },
     components: {
       // Custom admin header actions (language + theme toggles).
       // NOTE: After adding/changing custom components, regenerate the import map:
@@ -67,7 +73,7 @@ export default buildConfig({
   i18n: {
     // Enables the built-in admin language switcher and proper RTL layout for Persian.
     // Persian is default for this starter; switchable to English from the admin UI.
-    fallbackLanguage: 'fa',
+    fallbackLanguage: projectConfig.defaultLanguage,
     supportedLanguages: { en, fa },
   },
 

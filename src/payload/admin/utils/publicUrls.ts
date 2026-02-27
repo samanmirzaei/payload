@@ -1,5 +1,7 @@
 import type { Data } from 'payload'
 
+import { projectConfig } from '../../../project/project.config'
+
 export type PublicURLTarget = 'pages' | 'posts' | 'products'
 
 export type PublicURLRules = {
@@ -15,9 +17,9 @@ export type PublicURLRules = {
  */
 export const publicURLRules: PublicURLRules = {
   pageBasePath: '/',
-  postBasePath: '/blog',
-  productBasePath: '/products',
-  homeSlug: 'home',
+  postBasePath: projectConfig.publicUrlPaths.blogBasePath,
+  productBasePath: projectConfig.publicUrlPaths.productsBasePath,
+  homeSlug: projectConfig.publicUrlPaths.pageHomeSlug,
 }
 
 export function getPublicPathForDoc(args: {
@@ -51,4 +53,3 @@ export function joinURL(base: string, path: string): string {
   const cleanedPath = path.startsWith('/') ? path : `/${path}`
   return `${cleanedBase}${cleanedPath}`
 }
-

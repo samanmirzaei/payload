@@ -4,6 +4,28 @@ This repo is a **starter scaffold** for building modular, reusable Payload CMS b
 
 Step 1 sets up the folder architecture, a Payload config skeleton, and a module registration pattern.
 
+## Use as a per-project starter (clone per site)
+
+This repo is designed for **one independent deployment per repo** (not multi-tenant).
+
+1) Clone the repo for your new project:
+- `git clone <this-repo> my-project`
+- `cd my-project`
+
+2) Install deps:
+- `npm install`
+
+3) Initialize project settings + `.env`:
+- `npm run init:project`
+
+4) Start locally (Docker Compose + Postgres):
+- `docker compose up -d --build`
+
+5) Open admin:
+- `http://localhost:3000/admin` (or your configured `PAYLOAD_PUBLIC_SERVER_URL`)
+
+Project toggles live in `src/project/project.config.ts`.
+
 ## Development seed (dev-only)
 
 This starter includes a dev seed that upserts core globals + sample Pages/Posts, and optionally seeds commerce data if the commerce collections are registered.
